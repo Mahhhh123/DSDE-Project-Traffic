@@ -1,0 +1,6 @@
+ultralytics>=8.3
+pillow
+pandas
+matplotlib
+statsmodels
+jupyter

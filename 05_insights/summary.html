@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>สรุปผลฝนกับรถติด</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f6f5f1;--surface:#fff;--ink:#1c1e21;--ink2:#474c54;--muted:#7a808a;--line:#e3e1da;--wd:#2a6f97;--we:#c8553d;--dry:#a3abb5;--light:#7fb3d5;--heavy:#1f5f8b;
+ --ok:#2e6b3a;--ok-s:#e5f2e7;--mid:#8a5a00;--mid-s:#fbf1dc;--no:#8f2d2d;--no-s:#f8e4e2}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#131518;--surface:#1b1e22;--ink:#ecebe6;--ink2:#c2c6cc;--muted:#8c929b;--line:#2e3238;--wd:#6aaed6;--we:#e8846a;--dry:#6b737d;--light:#5f97bd;--heavy:#a9d1ef;
+ --ok:#8fcf9b;--ok-s:#1b2a1e;--mid:#e5b45c;--mid-s:#2e2615;--no:#f0a29b;--no-s:#331d1c}}
+:root[data-theme="dark"]{--bg:#131518;--surface:#1b1e22;--ink:#ecebe6;--ink2:#c2c6cc;--muted:#8c929b;--line:#2e3238;--wd:#6aaed6;--we:#e8846a;--dry:#6b737d;--light:#5f97bd;--heavy:#a9d1ef;
+ --ok:#8fcf9b;--ok-s:#1b2a1e;--mid:#e5b45c;--mid-s:#2e2615;--no:#f0a29b;--no-s:#331d1c}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.7 "IBM Plex Sans Thai",system-ui,sans-serif}
+.wrap{max-width:940px;margin:0 auto;padding:32px 16px 80px}
+h1{font-size:28px;line-height:1.3;margin:0 0 4px;font-weight:600}
+.sub{color:var(--ink2);margin:0 0 22px}
+h2{font-size:21px;font-weight:600;margin:42px 0 12px}
+h3{font-size:16.5px;font-weight:600;margin:0 0 4px}
+.answers{display:grid;gap:10px}
+.ans{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+.ans .q{font-size:13.5px;color:var(--muted)}
+.ans .a{font-size:17px;font-weight:500}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+.kpi .v{font-size:26px;font-weight:600;font-variant-numeric:tabular-nums;line-height:1.2}
+.kpi .l{font-size:13px;color:var(--ink2)}
+.f{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px 18px;margin:12px 0}
+.f .head{display:flex;justify-content:space-between;gap:10px;align-items:baseline;flex-wrap:wrap}
+.tag{font-size:12.5px;padding:1px 9px;border-radius:20px;white-space:nowrap}
+.t-ok{background:var(--ok-s);color:var(--ok)} .t-mid{background:var(--mid-s);color:var(--mid)} .t-no{background:var(--no-s);color:var(--no)}
+.f p{margin:6px 0 0;color:var(--ink2)}
+.f ul{margin:6px 0 0;padding-left:20px;color:var(--ink2)}
+.rows{margin-top:10px;display:grid;gap:5px}
+.row{display:grid;grid-template-columns:150px 1fr 120px;gap:10px;align-items:center;font-size:14px}
+.row .lab{color:var(--ink2)}
+.track{position:relative;height:16px;background:transparent;border-left:1px solid var(--line)}
+.track .b{position:absolute;top:2px;height:12px;border-radius:0 3px 3px 0}
+.track .one{position:absolute;top:-3px;bottom:-3px;border-left:1.5px dashed var(--muted)}
+.row .val{font-variant-numeric:tabular-nums;font-size:13.5px}
+.row .val small{color:var(--muted)}
+@media (max-width:560px){.row{grid-template-columns:110px 1fr 86px;font-size:13px}}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:13px;color:var(--ink2);margin-top:8px}
+.legend i{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+.tw{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--surface);margin:10px 0}
+table{border-collapse:collapse;width:100%;font-size:14.5px}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--ink2);font-weight:600;font-size:13.5px}
+tr:last-child td{border-bottom:0}
+td.n{text-align:right;font-variant-numeric:tabular-nums}
+.check li{list-style:none;margin-left:-20px}
+code{background:var(--line);padding:1px 5px;border-radius:4px;font-size:13.5px}
+.foot{margin-top:30px;font-size:13px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>สรุปผลทั้งหมด: ฝนตกกับรถติดในกรุงเทพฯ</h1>
+<p class="sub">ภาพ CCTV 100 กล้อง · 25–31 ส.ค. 2569 · นับรถด้วย YOLO ครบทุกภาพ · ฝนจากสถานีวัดฝน กทม. ที่ใกล้กล้องแต่ละตัว · สรุปเมื่อ 18 พ.ย. 2569</p>
+
+<h2>คำตอบสั้นของ 3 คำถาม</h2>
+<div class="answers">
+  <div class="ans"><div class="q">1. ช่วงเวลาไหนรถหนาแน่น</div><div class="a">วันธรรมดามีสองยอด คือเช้า 7 โมง และเย็น 5 โมง (สูงสุดของวัน) · วันหยุดค่อย ๆ เพิ่มจนสูงสุดตอนเที่ยง และเช้าตรู่มีรถแค่ครึ่งหนึ่งของวันธรรมดา</div></div>
+  <div class="ans"><div class="q">2. ฝนตกแล้วเปลี่ยนไปไหม</div><div class="a">วันธรรมดาที่ฝนตก กล้องเห็นรถ<b>น้อยลง</b>ชัดเจน (ฝนเบา −22%, ฝนหนัก −32%; โมเดล mixed-effects ได้ −14% และ −20%) ยังต้องนับมือยืนยันว่าไม่ใช่โมเดลนับพลาด</div></div>
+  <div class="ans"><div class="q">3. วันธรรมดากับวันหยุดต่างกันไหม</div><div class="a">ต่างกัน: วันหยุดผลของฝนเล็ก (ฝนเบา −3%, ฝนหนัก −12%) และทางสถิติยังบอกไม่ได้ว่าต่างจากปกติ</div></div>
+</div>
+
+<h2>ตัวเลขหลัก</h2>
+<div class="kpis">
+  <div class="kpi"><div class="v">60,461</div><div class="l">ภาพที่ใช้วิเคราะห์ (จาก 61,319)</div></div>
+  <div class="kpi"><div class="v">262,520</div><div class="l">คันที่ YOLO นับได้รวม</div></div>
+  <div class="kpi"><div class="v">5,600</div><div class="l">แถวฝนรายชั่วโมงจาก 123 สถานี กทม.</div></div>
+  <div class="kpi"><div class="v">15 / 112</div><div class="l">ชั่วโมงที่มีฝนในเมือง (บ่าย–ค่ำเท่านั้น)</div></div>
+  <div class="kpi"><div class="v">0.86 กม.</div><div class="l">ระยะกลางจากกล้องถึงสถานีวัดฝนใกล้สุด</div></div>
+</div>
+
+<h2>ข้อค้นพบหลัก 8 ข้อ</h2>
+<p style="color:var(--ink2);margin:0">แต่ละข้อมีป้ายบอกว่าหลักฐานแน่นแค่ไหน: <span class="tag t-ok">ชัดเจน</span> <span class="tag t-mid">มีแนวโน้ม ต้องตรวจเพิ่ม</span> <span class="tag t-no">ยังสรุปไม่ได้</span></p>
+
+<div class="f">
+  <div class="head"><h3>1. วันธรรมดามีสองยอด วันหยุดมียอดเดียวตอนเที่ยง</h3><span class="tag t-ok">ชัดเจน</span></div>
+  <p>จำนวนรถเฉลี่ยต่อภาพ ตอนฝนไม่ตก (คัน/ภาพ)</p>
+  <div class="tw"><table>
+    <tr><th>เวลา</th><th class="n">06:00</th><th class="n">07:00</th><th class="n">09:00</th><th class="n">12:00</th><th class="n">15:00</th><th class="n">17:00</th><th class="n">19:00</th></tr>
+    <tr><td>วันธรรมดา</td><td class="n">4.1</td><td class="n"><b>5.3</b></td><td class="n">4.9</td><td class="n">5.1</td><td class="n">5.6</td><td class="n"><b>5.8</b></td><td class="n">2.1</td></tr>
+    <tr><td>วันหยุด</td><td class="n">2.0</td><td class="n">2.8</td><td class="n">4.2</td><td class="n"><b>5.3</b></td><td class="n">3.4</td><td class="n">3.8</td><td class="n">1.4</td></tr>
+  </table></div>
+  <p>เช้าวันหยุดมีรถประมาณครึ่งหนึ่งของวันธรรมดา · บ่าย–เย็นวันหยุดน้อยกว่าวันธรรมดาประมาณ 35% · ตัวเลขหลัง 18:30 ลดลงมากเพราะฟ้ามืด (ดูข้อ 7)</p>
+</div>
+
+<div class="f">
+  <div class="head"><h3>2. ฝนตกเฉพาะบ่ายถึงเย็น และตกเป็นหย่อม</h3><span class="tag t-ok">ชัดเจน</span></div>
+  <ul>
+    <li>ฝนจริงตกเย็นวันที่ 25, 28, 31 (วันธรรมดา) และบ่ายถึงเย็น 29–30 (วันหยุด) ส่วนเช้าและสายแทบไม่มีฝนเลยทั้ง 7 วัน</li>
+    <li>ชั่วโมงที่หนักที่สุด (เสาร์ 29 ส.ค. 15:00–16:00) มีฝนแค่ 38% ของสถานี ฝนสูงสุด 36 มม./ชม. ในชั่วโมงเดียว</li>
+    <li>สนามบินดอนเมืองและสุวรรณภูมิรายงานฝน/พายุฝนฟ้าคะนองในเวลาเดียวกัน ยืนยันว่าข้อมูลสถานี กทม. ถูกต้อง</li>
+  </ul>
+</div>
+
+<div class="f">
+  <div class="head"><h3>3. ฝนตกวันธรรมดา กล้องเห็นรถน้อยลง โดยเฉพาะช่วงเย็น</h3><span class="tag t-mid">มีแนวโน้ม ต้องตรวจเพิ่ม</span></div>
+  <p>ดัชนีความติด (1.00 = เท่ากับปกติของกล้องเดียวกัน ชั่วโมงเดียวกัน ประเภทวันเดียวกัน) · ในวงเล็บ = ช่วงเชื่อมั่น 95%</p>
+  <div class="rows" id="effRows"></div>
+  <div class="legend"><span><i style="background:var(--light)"></i>ฝนเบา (0.5–5 มม./ชม.)</span><span><i style="background:var(--heavy)"></i>ฝนหนัก (≥ 5 มม./ชม.)</span><span><i style="border:1.5px dashed var(--muted);background:none"></i>ระดับปกติ 1.00</span></div>
+  <p>71 จาก 97 กล้องที่มีภาพตอนฝนพอ นับรถได้น้อยลงตอนฝน (ค่ากลาง −0.12) · ฝนหนักวันธรรมดามีแค่ 9 กล้อง 82 ภาพ ตัวเลขจึงยังไม่นิ่ง</p>
+</div>
+
+<div class="f">
+  <div class="head"><h3>4. วันหยุดผลของฝนเล็ก และยังบอกไม่ได้ว่าต่างจากปกติ</h3><span class="tag t-no">ยังสรุปไม่ได้</span></div>
+  <p>วันหยุดฝนเบา 0.97 (0.91–1.03) ฝนหนัก 0.88 (0.77–1.01) ช่วงเชื่อมั่นคร่อม 1.00 ทั้งคู่ · คำอธิบายที่เป็นไปได้: วันหยุดคนเลี่ยงการออกจากบ้านตอนฝนได้ หรือฝนวันหยุดตกตอนบ่ายที่ฟ้ายังสว่าง โมเดลจึงนับได้ปกติกว่า (ข้อ 5)</p>
+</div>
+
+<div class="f">
+  <div class="head"><h3>5. ยังต้องตรวจว่า "รถน้อยลง" ไม่ได้มาจากโมเดลนับพลาด</h3><span class="tag t-mid">ข้อควรระวัง</span></div>
+  <div class="tw"><table>
+    <tr><th>วันธรรมดา</th><th class="n">ความมั่นใจของ YOLO (เฉพาะภาพที่เจอรถ)</th><th class="n">ความสว่างภาพ</th><th class="n">รถ/ภาพ</th></tr>
+    <tr><td>ฝนไม่ตก</td><td class="n">0.468</td><td class="n">115</td><td class="n">4.7</td></tr>
+    <tr><td>ฝนเบา</td><td class="n">0.457</td><td class="n">104</td><td class="n">3.3</td></tr>
+  </table></div>
+  <p>ความมั่นใจของรถที่โมเดลเจอแทบไม่ลด แต่ภาพมืดลง (ฝนวันธรรมดาตกช่วงเย็นใกล้ค่ำ) และรถที่โมเดลมองไม่เห็นเลยจะไม่ปรากฏในค่าความมั่นใจ จึงยังตัดความเป็นไปได้นี้ทิ้งไม่ได้ · <b>ต้องนับมือ 200 ภาพแยกฝน/ไม่ฝนก่อนสรุปข้อ 3</b> · (แก้ไข: ตัวเลข 0.40 → 0.32 ที่เคยรายงานนับภาพที่ไม่เจอรถเป็น 0 จึงผิด)</p>
+</div>
+<div class="f">
+  <div class="head"><h3>6. แต่ละกล้องตอบสนองต่อฝนต่างกันมาก</h3><span class="tag t-mid">มีแนวโน้ม ต้องตรวจเพิ่ม</span></div>
+  <div class="tw"><table>
+    <tr><th>นับได้น้อยลงตอนฝนมากที่สุด</th><th class="n">ไม่ตก → ฝนตก</th><th>นับได้มากขึ้นตอนฝนมากที่สุด</th><th class="n">ไม่ตก → ฝนตก</th></tr>
+    <tr><td>604 แยกสีลม-นราธิวาส</td><td class="n">0.93 → 0.50</td><td>251 สะพานลอยใกล้วัดดิสหงษาราม</td><td class="n">0.90 → 2.30</td></tr>
+    <tr><td>500 ทางแยกมิตรสัมพันธ์</td><td class="n">0.90 → 0.51</td><td>141 สะพานลอยหน้า ปตท.</td><td class="n">0.95 → 1.52</td></tr>
+    <tr><td>178 สะพานลอยหน้า รพ.พญาไท</td><td class="n">0.96 → 0.56</td><td>619 ทางแยกอังรีดูนังต์</td><td class="n">1.00 → 1.47</td></tr>
+    <tr><td>26 แยกบุคคโล</td><td class="n">0.94 → 0.56</td><td>150 สะพานลอยใกล้ ร.ร.สามเสน</td><td class="n">0.91 → 1.38</td></tr>
+  </table></div>
+  <p>กล้องที่นับได้มากขึ้นตอนฝน อาจเป็นจุดที่รถติดจริง (รถหยุดค้างในภาพนานขึ้น) จุดเหล่านี้ควรเปิดดูภาพจริงเป็นกรณีศึกษาในวิดีโอ · ความไวต่อฝนไม่เกี่ยวกับว่ากล้องนั้นปกติรถเยอะหรือน้อย (สหสัมพันธ์ −0.04)</p>
+</div>
+
+<div class="f">
+  <div class="head"><h3>7. ข้อจำกัดของการนับรถด้วย YOLO สำเร็จรูป</h3><span class="tag t-ok">ชัดเจน</span></div>
+  <ul>
+    <li><b>กลางคืน:</b> หลังพระอาทิตย์ตก (18:30) ภาพมืดลง (ความสว่าง 119 → 97) จำนวนที่นับได้ลดลงประมาณ 60% ซึ่งไม่ใช่รถหายจริงทั้งหมด → ใช้เทียบได้เฉพาะภายในชั่วโมงเดียวกัน</li>
+    <li><b>มอเตอร์ไซค์ถูกนับขาด:</b> นับได้แค่ 4% ของรถทั้งหมด (รถยนต์ 76%, บัส 11%, บรรทุก 9%) ต่ำกว่าความจริงในกรุงเทพฯ มาก เพราะมอเตอร์ไซค์ในภาพเล็ก → เรื่องมอเตอร์ไซค์หลบฝนจึงยังสรุปไม่ได้</li>
+    <li>ภาพนิ่งบอกได้แค่ "จำนวนรถในภาพ" ไม่ใช่ความเร็ว รถมากอาจแปลว่าติดหรือไหลดีก็ได้</li>
+  </ul>
+</div>
+
+<div class="f">
+  <div class="head"><h3>8. ฝนจากโมเดลกริด (Open-Meteo) ใช้แทนสถานีจริงไม่ได้</h3><span class="tag t-ok">ชัดเจน · เป็น insight ด้านคุณภาพข้อมูล</span></div>
+  <p>Open-Meteo บอกว่า 27 ส.ค. ฝนหนักสุดตอน 13:00 แต่สถานี กทม. วัดได้เกือบ 0 ทั้งวัน · 28 ส.ค. Open-Meteo บอกฝนตอน 06:00 แต่สถานีวัดได้ตอนเย็น 18:00–19:00 · ทุกวันที่ฝนตก เวลาฝนจากโมเดลเร็วกว่าของจริงประมาณ 1–4 ชั่วโมง → <b>ถ้าใช้ฝนจากโมเดลจะได้ข้อสรุปผิด</b> นี่คือเหตุผลที่ต้อง scrape สถานีวัดฝน กทม.</p>
+</div>
+
+<h2>ข้อค้นพบเพิ่มเติม (เชื่อมข้อมูลหลายส่วนเข้าด้วยกัน)</h2>
+<div class="f">
+  <div class="head"><h3>9. รถบรรทุกหลบชั่วโมงเร่งด่วนวันธรรมดา</h3><span class="tag t-ok">ชัดเจน</span></div>
+  <p>สัดส่วนรถบรรทุกวันธรรมดา: 7.8–7.9% ตอน 06:00–07:59 และ 7.6% ตอน 17:00 → 3.9–5.5% หลัง 18:00 แต่ช่วง 09:00–14:00 อยู่ที่ 10–10.7% · วันหยุดช่วงเช้าสูงถึง 10.5% (ไม่มีการลดลงตอนเช้า) → สอดคล้องกับเวลาห้ามรถบรรทุกเข้าเมืองในชั่วโมงเร่งด่วนวันทำการ · <b>เชื่อมข้อมูลเพิ่มได้:</b> scrape ประกาศเวลาห้ามรถบรรทุกของ บช.น./กทม. มาเทียบรายถนน</p>
+</div>
+<div class="f">
+  <div class="head"><h3>10. ส่วนใหญ่รถหนาแน่นตอนเย็นมากกว่าตอนเช้า</h3><span class="tag t-ok">ชัดเจน</span></div>
+  <p>วันธรรมดา 38 กล้องมีรถตอน 16–18 น. มากกว่าตอน 07–09 น. เกิน 1.3 เท่า มีแค่ 11 กล้องที่ตอนเช้ามากกว่า · คอลัมน์ทิศทางใน cctv_info ("รถมาจาก… มุ่งหน้า…") ใช้แยกขาเข้าเมือง/ขาออกเมือง แล้วดูว่าฝนเย็นกระทบขาออกเมืองมากกว่าไหม</p>
+</div>
+<div class="f">
+  <div class="head"><h3>11. กล้องที่อยู่จุดเดียวกันให้ผลสอดคล้องกัน (ใช้ตรวจความน่าเชื่อถือ)</h3><span class="tag t-ok">ชัดเจน</span></div>
+  <p>21 คู่กล้องที่ห่างกันไม่เกิน 60 ม. จำนวนรถรายชั่วโมงสัมพันธ์กันค่ากลาง r = 0.60 · คู่ที่หันคนละทิศ (เช่น 118 กับ 119 ที่แยกรัชดา-สุทธิสาร) สัมพันธ์กันแค่ 0.08 → ทิศทางสำคัญกว่าตำแหน่ง</p>
+</div>
+<div class="f">
+  <div class="head"><h3>12. หลังฝนหยุด ผลยังค้างอยู่เล็กน้อย และพบกล้องที่ภาพอาจค้าง</h3><span class="tag t-mid">มีแนวโน้ม</span></div>
+  <p>ชั่วโมงแรกหลังฝนหยุด ดัชนี 0.92 เทียบกับชั่วโมงแห้งปกติ 0.95 (362 ชั่วโมง-กล้อง) · กล้อง 150, 939, 938, 395 มีผลตรวจจับซ้ำกันทุกค่าติดกันหลายสิบครั้ง (150 มี 124 ครั้ง) น่าจะเป็นภาพค้าง → <b>กล้อง 150 ที่ติดอันดับ "นับได้มากขึ้นตอนฝน" อาจเป็นผลจากภาพค้าง ต้องตรวจก่อนใช้</b></p>
+</div>
+
+<h2>ข้อมูลที่เพิ่มได้และเชื่อมกับของเดิม</h2>
+<div class="tw"><table>
+<tr><th>ข้อมูลเพิ่ม</th><th>เชื่อมกับอะไร</th><th>ตอบคำถามอะไรเพิ่ม</th></tr>
+<tr><td>จุดน้ำท่วมขัง/จุดเฝ้าระวังน้ำท่วมของ กทม.</td><td>พิกัดกล้อง (หาจุดที่ใกล้)</td><td>กล้องใกล้จุดน้ำท่วมซ้ำซาก ไวต่อฝนกว่าไหม</td></tr>
+<tr><td>ประเภทถนน/จำนวนช่องทางจาก OSM (มีสคริปต์ s6 แล้ว)</td><td>พิกัดกล้อง</td><td>ถนนใหญ่หรือถนนรองได้รับผลจากฝนมากกว่า</td></tr>
+<tr><td>สถานีรถไฟฟ้า BTS/MRT, โรงเรียน, ห้าง (OSM)</td><td>พิกัดกล้อง รัศมี 300 ม.</td><td>จุดใกล้รถไฟฟ้า คนเปลี่ยนไปใช้รถไฟฟ้าตอนฝนไหม</td></tr>
+<tr><td>เวลาห้ามรถบรรทุก (บช.น./กทม.)</td><td>ชั่วโมง + ถนน</td><td>ยืนยันข้อ 9 รายถนน</td></tr>
+<tr><td>ทิศทางกล้อง (มีแล้วใน cctv_info)</td><td>ระยะ/ทิศถึงใจกลางเมือง</td><td>ขาเข้า vs ขาออก ช่วงเช้า/เย็น และผลของฝน</td></tr>
+<tr><td>ฝน 15 นาทีของ กทม. (เว็บเดิม เปลี่ยนตัวเลือกช่วงเวลา)</td><td>ภาพทุก 10 นาที</td><td>วัดเวลาหน่วงหลังฝนเริ่มตกละเอียดขึ้น</td></tr>
+<tr><td>ภาพเรดาร์ฝน กรมอุตุฯ/สำนักการระบายน้ำ</td><td>พิกัดกล้อง</td><td>ฝนตรงจุดกล้องแม่นกว่าสถานีที่ห่างเกือบ 1 กม.</td></tr>
+</table></div>
+
+<h2>คุณภาพข้อมูล</h2>
+<div class="tw"><table>
+<tr><th>เรื่อง</th><th>ผล</th><th>จัดการอย่างไร</th></tr>
+<tr><td>ภาพเสีย</td><td>504 ภาพ (ไฟล์ 1.4 KB) กระจายทุกกล้อง</td><td>คัดออก</td></tr>
+<tr><td>ภาพหาย</td><td>27 ส.ค. 06:00–08:59 เหลือประมาณ 220 จาก 1,800 ภาพ</td><td>ไม่ใช้ช่วงนั้นในการเทียบ</td></tr>
+<tr><td>ตารางกล้อง</td><td>พิกัดครบ 100 · จำนวนภาพตรงกับ zip ทุกกล้อง · ชื่ออังกฤษเสีย 5 · กล้องที่ห่างกันไม่เกิน 60 ม. มี 21 คู่</td><td>เติมชื่อจากภาษาไทย</td></tr>
+<tr><td>ฝนจากเว็บ กทม.</td><td>เว็บแสดงสูงสุด 50 สถานีต่อเวลา เรียงจากฝนมากไปน้อย</td><td>สถานีที่ไม่อยู่ในตารางถือว่าฝนไม่มากกว่าค่าต่ำสุดในตาราง</td></tr>
+<tr><td>ฐานเปรียบเทียบ</td><td>ภาพฝน 1,141 ภาพไม่มีชั่วโมงแห้งของกล้องเดียวกันให้เทียบ</td><td>ไม่รวมในการคำนวณผลของฝน</td></tr>
+</table></div>
+
+<h2>ใช้ประโยชน์อะไรได้ (ข้อเสนอ)</h2>
+<ul>
+<li>เฝ้าระวัง <b>ช่วงเย็นวันธรรมดา (16:00–19:00) เมื่อฝนตก</b> ซึ่งเป็นช่วงที่ผลชัดที่สุด และตรงกับชั่วโมงเร่งด่วนขากลับ</li>
+<li>จุดที่นับได้มากขึ้นตอนฝน (251, 141, 619, 150) ควรตรวจภาพจริง ถ้ายืนยันว่ารถติดจริง ให้ใช้เป็นจุดส่งเจ้าหน้าที่จราจรเมื่อเรดาร์เห็นฝน</li>
+<li>ถ้าจะใช้กล้อง CCTV วัดการจราจรจริง ต้องทดสอบโมเดลกับภาพฝนและกลางคืนก่อน (ตอนกลางคืนนับได้น้อยลงชัดเจน)</li>
+<li>วิเคราะห์ฝนกับการจราจรต้องใช้สถานีวัดฝนจริงที่ใกล้จุด ไม่ใช่ฝนจากโมเดลกริด</li>
+</ul>
+
+<h2>ทำครบตามโจทย์แค่ไหน</h2>
+<div class="tw"><table>
+<tr><th>ข้อกำหนด</th><th>สถานะ</th><th>ที่เหลือ</th></tr>
+<tr><td>Web scraping (≥ 3 แหล่ง)</td><td>✅ ดึงจริง 5 แหล่ง (สถานีฝน กทม., METAR, Open-Meteo, sunrise-sunset, วันหยุด)</td><td>โบนัส: ทำแหล่ง กทม. ด้วย Playwright · รัน OSM (s6)</td></tr>
+<tr><td>Component 1 · Data Engineering</td><td>✅ ดัชนีภาพ คัดภาพเสีย นับรถ รวมฝนรายกล้อง ตาราง fact · <code>run_all.py</code></td><td>ตรวจภาพค้าง/ซ้ำ · ห่อด้วย Prefect (ถ้าอยากได้คะแนนเพิ่ม)</td></tr>
+<tr><td>Component 2 · Data Science</td><td>🟡 ดัชนีความติด เปรียบเทียบพร้อมช่วงเชื่อมั่น (bootstrap ตามกล้อง)</td><td><b>นับมือ 200 ภาพ</b> · โมเดล mixed-effects · ทดลองเปลี่ยนเกณฑ์ฝนและใช้ occupancy แทนจำนวนรถ</td></tr>
+<tr><td>Component 3 · Dashboard</td><td>✅ ต้นแบบใช้ข้อมูลจริง (ไฟล์ 02) + แผนที่ (ไฟล์ 03)</td><td>ย้ายไป Streamlit หรือ deploy ไฟล์ HTML</td></tr>
+<tr><td>Component 4 · Insights</td><td>🟡 ข้อค้นพบ 8 ข้อในหน้านี้</td><td>ยืนยันข้อ 3 และข้อ 5 หลังนับมือ · เลือกภาพกรณีศึกษา</td></tr>
+<tr><td>ชุดส่งงาน</td><td>⬜ ยังไม่เริ่ม</td><td>สไลด์ PDF · วิดีโอ 15 นาที · Drive (viewer) · MCV · Discord ก่อน 6 ธ.ค.</td></tr>
+</table></div>
+
+<h2>ประโยคสรุปสำหรับวิดีโอ</h2>
+<div class="ans"><div class="a" style="font-weight:400">จากภาพ CCTV กว่า 60,000 ภาพของ 100 กล้องในกรุงเทพฯ จับคู่กับฝนจากสถานีวัดฝน กทม. ที่ใกล้ที่สุด เราพบว่ารถหนาแน่นสุดตอนเย็นวันธรรมดา และเมื่อฝนตกช่วงนั้น กล้องเห็นรถน้อยลงประมาณ 20–30% ขณะที่วันหยุดแทบไม่เปลี่ยน ซึ่งเรายังต้องยืนยันด้วยการนับมือว่าไม่ได้เกิดจากโมเดลมองเห็นแย่ลงตอนฝนและตอนมืด</div></div>
+
+<p class="foot">ข้อมูลทั้งหมดอยู่ใน <code>data/clean/</code> · ตัวเลขในหน้านี้มาจาก <code>fact_images.csv</code> และ <code>dashboard.json</code> · ถ้ารัน pipeline ใหม่หลังนับมือหรือเปลี่ยนเกณฑ์ ต้องอัปเดตตัวเลขในหน้านี้ด้วย</p>
+</div>
+<script>
+const E = [
+  ['วันธรรมดา · ฝนเบา', .779, .734, .823, 'light'],
+  ['วันธรรมดา · ฝนหนัก', .679, .628, .735, 'heavy'],
+  ['วันธรรมดา · เย็น ฝนเบา', .756, .702, .819, 'light'],
+  ['วันหยุด · ฝนเบา', .970, .910, 1.034, 'light'],
+  ['วันหยุด · ฝนหนัก', .884, .774, 1.011, 'heavy'],
+];
+const lo = 0.5, hi = 1.1, pct = v => (v - lo) / (hi - lo) * 100;
+document.getElementById('effRows').innerHTML = E.map(([n, v, a, b, k]) =>
+  `<div class="row"><span class="lab">${n}</span><span class="track"><span class="b" style="left:0;width:${pct(v)}%;background:var(--${k})"></span>
+   <span class="one" style="left:${pct(1)}%"></span><span style="position:absolute;top:7px;height:2px;left:${pct(a)}%;width:${pct(b) - pct(a)}%;background:var(--ink)"></span></span>
+   <span class="val">${v.toFixed(2)} <small>(${a.toFixed(2)}–${b.toFixed(2)})</small></span></div>`).join('');
+</script>
+</body>
+</html>
