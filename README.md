@@ -19,6 +19,8 @@
 | Open-Meteo Historical Weather | API | `01_scraping/s3_openmeteo.py` | `openmeteo_hourly.csv` |
 | sunrise-sunset.org | API | `01_scraping/s4_sun.py` | `sun_daily.csv` |
 | timeanddate.com ปฏิทินวันหยุดไทย | Web scraping (ตาราง HTML) | `01_scraping/s5_holidays.py` | `holidays_2026.csv`, `day_type.csv` |
+| สถานีวัดน้ำท่วมถนน สำนักการระบายน้ำ กทม. | Web scraping (ส่งฟอร์ม + อ่านตาราง HTML) | `01_scraping/s8_bma_road_flood.py` | `bma_road_flood_hourly.csv`, `bma_road_flood_sensors.csv` |
+| BMA Open Data: จุดเสี่ยงน้ำท่วม 737 จุด (สถานะการแก้ไข), จุดเสี่ยงปี 2568, สถิติน้ำท่วมถนน 2566 | API (CKAN) | `01_scraping/s9_bma_flood_risk.py` | `flood_risk_points.csv`, `flood_risk_points_2568.csv`, `road_flood_events_2566.csv` |
 | OpenStreetMap Overpass / Nominatim | API (ยังไม่ได้ใช้ในผลหลัก) | `s6_osm_roads.py`, `s7_geocode_cameras.py` | – |
 
 ทุกคำขอที่ scrape ถูกบันทึกใน `data/raw/scrape_log.csv`
@@ -28,7 +30,7 @@
 ```
 cctv_images.zip ─► P1 ดัชนีภาพ + คัดภาพเสีย ─► P2 นับรถ YOLOv8n ─┐
 cctv_info.csv  ─► P0 ตารางกล้อง (พิกัด) ─────────────────────────┤
-Scraping S1–S5 (ฝน, อากาศ, แสง, วันหยุด) ────────────────────────┼─► P3 ตาราง fact (1 แถว/ภาพ) ─► P4 สรุป ─► Dashboard
+Scraping S1–S5, S8–S9 (ฝน, อากาศ, แสง, วันหยุด, น้ำท่วม) ────────────────────────┼─► P3 ตาราง fact (1 แถว/ภาพ) ─► P4 สรุป ─► Dashboard
                                                                    └─► analysis.ipynb (สถิติ + insights)
 ```
 
@@ -36,7 +38,7 @@ Scraping S1–S5 (ฝน, อากาศ, แสง, วันหยุด) ─
 |---|---|---|
 | `01_scraping/` | งานบังคับ Web scraping | `common.py`, `s1`–`s7` |
 | `02_data_engineering/` | Component 1 | `p0_cameras.py`, `p1_index_images.py`, `p3_build_tables.py`, `run_all.py` |
-| `03_data_science/` | Component 2 | `p2_detect_vehicles.py`, `p4_dashboard_data.py`, `p5_label_sample.py`, `analysis.ipynb` |
+| `03_data_science/` | Component 2 | `p2_detect_vehicles.py`, `p4_dashboard_data.py`, `p5_label_sample.py`, `p6_flood_join.py`, `analysis.ipynb` |
 | `04_dashboard/` | Component 3 | `dashboard.html`, `camera_map.html` |
 | `05_insights/` | Component 4 | `summary.html` |
 | `docs/` | แผนงาน | `project_plan.html` |
@@ -72,6 +74,7 @@ python 02_data_engineering/run_all.py --skip-scrape --skip-detect   # ใช้�
 - รถบรรทุกลดลงในชั่วโมงเร่งด่วนวันธรรมดา (~8% เทียบกับ ~10.5% ช่วงกลางวัน)
 - กล้องคู่ที่อยู่จุดเดียวกันสอดคล้องกัน (r ≈ 0.60) · พบกล้องที่อาจภาพค้าง 4 ตัว
 - ฝนจาก Open-Meteo ผิดเวลาจากสถานีจริง 1–4 ชั่วโมง จึงต้องใช้สถานี กทม.
+- สัปดาห์นี้ไม่มีน้ำท่วมถนนจริงรอบกล้อง (สถานีวัดน้ำท่วมถนนใกล้ 76 กล้องวัดได้ 0 ตลอด) · กล้องใกล้จุดน้ำขังที่ยังไม่แก้ ไม่ได้ติดมากกว่าจุดอื่น (p = 0.70) มีแค่ฝนหนักวันหยุดที่เห็นรถน้อยลง 26%
 
 ## ข้อจำกัด
 

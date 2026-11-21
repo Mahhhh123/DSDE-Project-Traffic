@@ -16,10 +16,13 @@ STEPS = [
     ('S2 METAR สนามบิน', 'metar_30min.csv', ['01_scraping/s2_metar_airports.py']),
     ('S3 Open-Meteo', 'openmeteo_hourly.csv', ['01_scraping/s3_openmeteo.py']),
     ('S4 พระอาทิตย์ขึ้น/ตก', 'sun_daily.csv', ['01_scraping/s4_sun.py']),
+    ('S8 น้ำท่วมถนน กทม.', 'bma_road_flood_hourly.csv', ['01_scraping/s8_bma_road_flood.py']),
+    ('S9 จุดเสี่ยงน้ำท่วม กทม.', 'flood_risk_points.csv', ['01_scraping/s9_bma_flood_risk.py']),
     ('P1 ดัชนีภาพ', 'images.csv', ['02_data_engineering/p1_index_images.py', '<zip>']),
     ('P2 นับรถ YOLO', None, ['03_data_science/p2_detect_vehicles.py', '<zip>']),
     ('P3 รวมตาราง fact', None, ['02_data_engineering/p3_build_tables.py']),
     ('P4 ข้อมูลแดชบอร์ด', None, ['03_data_science/p4_dashboard_data.py']),
+    ('P6 เชื่อมข้อมูลน้ำท่วม', None, ['03_data_science/p6_flood_join.py']),
 ]
 
 
