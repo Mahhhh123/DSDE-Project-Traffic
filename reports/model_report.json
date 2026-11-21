@@ -1,0 +1,415 @@
+{
+ "rows": {
+  "all": 10125,
+  "train": 7134,
+  "test": 2991
+ },
+ "split": {
+  "train": "2026-08-25..2026-08-29",
+  "test": "2026-08-30..2026-08-31",
+  "tuning_folds": [
+   {
+    "train_end": "2026-08-27",
+    "valid": "2026-08-28"
+   },
+   {
+    "train_end": "2026-08-28",
+    "valid": "2026-08-29"
+   }
+  ]
+ },
+ "runs": [
+  {
+   "model": "baseline_history_profile",
+   "features": "hist_profile",
+   "params": {},
+   "cv_mae": null,
+   "mae": 1.2069,
+   "rmse": 1.6794,
+   "r2": 0.714,
+   "n_test": 2991
+  },
+  {
+   "model": "baseline_persistence_lag1",
+   "features": "lag1_label",
+   "params": {},
+   "cv_mae": null,
+   "mae": 1.3486,
+   "rmse": 1.8557,
+   "r2": 0.6545,
+   "n_test": 2790
+  },
+  {
+   "model": "linear",
+   "features": "F0_history",
+   "params": {
+    "regParam": 0.01,
+    "elasticNetParam": 0.5
+   },
+   "cv_mae": 1.3099,
+   "mae": 1.18,
+   "rmse": 1.617,
+   "r2": 0.7348,
+   "seconds": 7
+  },
+  {
+   "model": "gbt",
+   "features": "F0_history",
+   "params": {
+    "maxDepth": 3,
+    "stepSize": 0.05
+   },
+   "cv_mae": 1.3391,
+   "mae": 1.1644,
+   "rmse": 1.5977,
+   "r2": 0.7412,
+   "seconds": 150
+  },
+  {
+   "model": "linear",
+   "features": "F1_+calendar",
+   "params": {
+    "regParam": 0.01,
+    "elasticNetParam": 0.5
+   },
+   "cv_mae": 1.3048,
+   "mae": 1.1771,
+   "rmse": 1.6142,
+   "r2": 0.7358,
+   "seconds": 7
+  },
+  {
+   "model": "gbt",
+   "features": "F1_+calendar",
+   "params": {
+    "maxDepth": 3,
+    "stepSize": 0.05
+   },
+   "cv_mae": 1.3391,
+   "mae": 1.1644,
+   "rmse": 1.5977,
+   "r2": 0.7412,
+   "seconds": 159
+  },
+  {
+   "model": "linear",
+   "features": "F2_+weather",
+   "params": {
+    "regParam": 0.01,
+    "elasticNetParam": 0.5
+   },
+   "cv_mae": 1.2418,
+   "mae": 1.1439,
+   "rmse": 1.5771,
+   "r2": 0.7478,
+   "seconds": 7
+  },
+  {
+   "model": "gbt",
+   "features": "F2_+weather",
+   "params": {
+    "maxDepth": 3,
+    "stepSize": 0.05
+   },
+   "cv_mae": 1.2768,
+   "mae": 1.1588,
+   "rmse": 1.6194,
+   "r2": 0.7341,
+   "seconds": 157
+  },
+  {
+   "model": "linear",
+   "features": "F3_+location",
+   "params": {
+    "regParam": 0.01,
+    "elasticNetParam": 0.5
+   },
+   "cv_mae": 1.2416,
+   "mae": 1.1415,
+   "rmse": 1.5767,
+   "r2": 0.7479,
+   "seconds": 13
+  },
+  {
+   "model": "random_forest",
+   "features": "F3_+location",
+   "params": {
+    "maxDepth": 12,
+    "minInstancesPerNode": 5
+   },
+   "cv_mae": 1.2613,
+   "mae": 1.1069,
+   "rmse": 1.5288,
+   "r2": 0.763,
+   "seconds": 120
+  },
+  {
+   "model": "gbt",
+   "features": "F3_+location",
+   "params": {
+    "maxDepth": 3,
+    "stepSize": 0.1
+   },
+   "cv_mae": 1.2685,
+   "mae": 1.1321,
+   "rmse": 1.5871,
+   "r2": 0.7446,
+   "seconds": 254
+  },
+  {
+   "model": "linear",
+   "features": "F4_+lag1(nowcast)",
+   "params": {
+    "regParam": 0.01,
+    "elasticNetParam": 0.5
+   },
+   "cv_mae": 1.1577,
+   "mae": 1.0551,
+   "rmse": 1.4503,
+   "r2": 0.7867,
+   "seconds": 20
+  },
+  {
+   "model": "random_forest",
+   "features": "F4_+lag1(nowcast)",
+   "params": {
+    "maxDepth": 8,
+    "minInstancesPerNode": 5
+   },
+   "cv_mae": 1.162,
+   "mae": 1.0303,
+   "rmse": 1.3984,
+   "r2": 0.8017,
+   "seconds": 105
+  },
+  {
+   "model": "gbt",
+   "features": "F4_+lag1(nowcast)",
+   "params": {
+    "maxDepth": 3,
+    "stepSize": 0.05
+   },
+   "cv_mae": 1.1761,
+   "mae": 1.0638,
+   "rmse": 1.4844,
+   "r2": 0.7766,
+   "seconds": 206
+  }
+ ],
+ "nowcast": {
+  "model": "gbt",
+  "features": "F4_+lag1(nowcast)",
+  "params": {
+   "maxDepth": 3,
+   "stepSize": 0.05
+  },
+  "cv_mae": 1.1761,
+  "mae": 1.0638,
+  "rmse": 1.4844,
+  "r2": 0.7766,
+  "seconds": 206
+ },
+ "best": {
+  "model": "linear",
+  "features": "F3_+location",
+  "params": {
+   "regParam": 0.01,
+   "elasticNetParam": 0.5
+  },
+  "test": {
+   "mae": 1.1415,
+   "rmse": 1.5767,
+   "r2": 0.7479
+  },
+  "importance": {},
+  "by_group": {
+   "is_weekend=0.0": {
+    "n": 1496,
+    "model": {
+     "mae": 1.1016,
+     "rmse": 1.4912,
+     "r2": 0.8058
+    },
+    "baseline": {
+     "mae": 1.1665,
+     "rmse": 1.5899,
+     "r2": 0.7793
+    }
+   },
+   "is_weekend=1.0": {
+    "n": 1495,
+    "model": {
+     "mae": 1.1815,
+     "rmse": 1.6579,
+     "r2": 0.6536
+    },
+    "baseline": {
+     "mae": 1.2474,
+     "rmse": 1.7645,
+     "r2": 0.6076
+    }
+   },
+   "rain_prev_level=dry": {
+    "n": 2646,
+    "model": {
+     "mae": 1.1363,
+     "rmse": 1.5642,
+     "r2": 0.7567
+    },
+    "baseline": {
+     "mae": 1.1783,
+     "rmse": 1.6377,
+     "r2": 0.7333
+    }
+   },
+   "rain_prev_level=heavy": {
+    "n": 47,
+    "model": {
+     "mae": 1.3891,
+     "rmse": 1.7303,
+     "r2": 0.5325
+    },
+    "baseline": {
+     "mae": 1.7414,
+     "rmse": 2.3673,
+     "r2": 0.1249
+    }
+   },
+   "rain_prev_level=light": {
+    "n": 298,
+    "model": {
+     "mae": 1.1486,
+     "rmse": 1.6602,
+     "r2": 0.6225
+    },
+    "baseline": {
+     "mae": 1.3765,
+     "rmse": 1.9,
+     "r2": 0.5057
+    }
+   },
+   "light=day": {
+    "n": 2588,
+    "model": {
+     "mae": 1.2037,
+     "rmse": 1.6447,
+     "r2": 0.7241
+    },
+    "baseline": {
+     "mae": 1.2657,
+     "rmse": 1.7453,
+     "r2": 0.6893
+    }
+   },
+   "light=night": {
+    "n": 398,
+    "model": {
+     "mae": 0.7391,
+     "rmse": 1.0345,
+     "r2": 0.4839
+    },
+    "baseline": {
+     "mae": 0.8206,
+     "rmse": 1.1558,
+     "r2": 0.3557
+    }
+   }
+  },
+  "selection": "lowest forward-chaining CV MAE among F0–F3 (planning model, no lag)",
+  "coefficients_log_scale": {
+   "hist_profile_i": 0.9012,
+   "city_rain_share_prev_i": -0.2223,
+   "is_weekend_i": -0.1349,
+   "rain_prev_level_ohe_light": -0.0469,
+   "district_ohe_วังทองหลาง": -0.0395,
+   "light_ohe_night": -0.0277,
+   "light_ohe_day": 0.0277,
+   "district_ohe_ธนบุรี": 0.0243,
+   "district_ohe_สาทร": -0.0169,
+   "district_ohe_ราชเทวี": 0.0092,
+   "district_ohe_ดุสิต": -0.0073,
+   "poi_hospital_i": 0.004,
+   "poi_mall_i": 0.0027,
+   "district_ohe_จตุจักร": -0.0025,
+   "district_ohe_บางซื่อ": 0.002,
+   "district_ohe_ตลิ่งชัน": 0.0017,
+   "flood_risk2568_500m_i": -0.0012,
+   "poi_government_i": -0.001,
+   "metar_rain_prev_i": -0.0009,
+   "hour_i": 0.0004,
+   "om_cloud_prev_i": -0.0003
+  },
+  "weather_coefficients_pct": {
+   "city_rain_share_prev_i": -19.9,
+   "rain_prev_level_ohe_light": -4.6,
+   "metar_rain_prev_i": -0.1,
+   "om_cloud_prev_i": -0.0,
+   "rain_prev_level_ohe_dry": 0.0,
+   "rain_prev_level_ohe_heavy": 0.0,
+   "rain_prev_level_ohe___unknown": 0.0,
+   "rain_prev_mm_i": 0.0,
+   "om_precip_prev_i": 0.0
+  }
+ },
+ "rain_effect": {
+  "weekend": {
+   "n": 147,
+   "actual": 3.78,
+   "pred_with_rain": 3.023,
+   "pred_if_dry": 3.455,
+   "ratio": 0.875
+  },
+  "weekday": {
+   "n": 198,
+   "actual": 2.705,
+   "pred_with_rain": 3.226,
+   "pred_if_dry": 3.693,
+   "ratio": 0.873
+  }
+ },
+ "camera_holdout": {
+  "time+weather": {
+   "mae": 2.3241,
+   "rmse": 3.1286,
+   "r2": 0.0785
+  },
+  "time+weather+location": {
+   "mae": 3.0852,
+   "rmse": 4.1811,
+   "r2": -0.7146
+  }
+ },
+ "rf_importance_F3": {
+  "hist_profile": 0.6208,
+  "district": 0.0707,
+  "hour": 0.07,
+  "light": 0.0539,
+  "city_rain_share_prev": 0.0182,
+  "flood_kde": 0.0165,
+  "poi_food": 0.0137,
+  "dist_rail_m": 0.0135,
+  "lanes_n": 0.0109,
+  "poi_hospital": 0.0105,
+  "dow": 0.01,
+  "flood_events_2566_district": 0.01,
+  "poi_bus_stop": 0.0099,
+  "poi_office": 0.0096,
+  "poi_government": 0.0095,
+  "om_precip_prev": 0.0082,
+  "poi_mall": 0.0063,
+  "poi_market": 0.0063,
+  "highway": 0.0056,
+  "is_weekend": 0.005,
+  "om_cloud_prev": 0.005,
+  "poi_school": 0.0033,
+  "flood_points_500m": 0.0029,
+  "flood_unfixed_500m": 0.0023,
+  "flood_risk2568_500m": 0.0023,
+  "metar_rain_prev": 0.0021,
+  "poi_rail_station": 0.0013,
+  "rain_prev_level": 0.0009,
+  "rain_prev_mm": 0.0009,
+  "in_flood_hotspot": 0.0001,
+  "is_holiday": 0.0
+ }
+}

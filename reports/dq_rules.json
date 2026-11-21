@@ -1,0 +1,268 @@
+[
+ {
+  "table": "cameras",
+  "rule": "english name placeholder (\"connect BMAcctv\"/\"0\") -> null",
+  "rows_before": 100,
+  "rows_affected": 5,
+  "action": "set_null"
+ },
+ {
+  "table": "cameras",
+  "rule": "coordinates missing or outside Bangkok bbox",
+  "rows_before": 100,
+  "rows_affected": 0,
+  "action": "flag"
+ },
+ {
+  "table": "cameras",
+  "rule": "duplicate camera_id",
+  "rows_before": 100,
+  "rows_affected": 0,
+  "action": "drop"
+ },
+ {
+  "table": "images",
+  "rule": "non-image entries in zip",
+  "rows_before": 61319,
+  "rows_affected": 0,
+  "action": "drop"
+ },
+ {
+  "table": "images",
+  "rule": "filename does not match <cam>/<cam>_<loc>_<yyyymmdd>_<hhmmss>.jpg",
+  "rows_before": 61319,
+  "rows_affected": 0,
+  "action": "drop"
+ },
+ {
+  "table": "images",
+  "rule": "timestamp outside study window 2026-08-25..2026-08-31 06-21h",
+  "rows_before": 61319,
+  "rows_affected": 0,
+  "action": "drop"
+ },
+ {
+  "table": "images",
+  "rule": "duplicate (camera, timestamp)",
+  "rows_before": 61319,
+  "rows_affected": 0,
+  "action": "drop"
+ },
+ {
+  "table": "images",
+  "rule": "camera id not in cctv_info",
+  "rows_before": 61319,
+  "rows_affected": 0,
+  "action": "drop"
+ },
+ {
+  "table": "images",
+  "rule": "broken image (< 3000 bytes or cannot decode)",
+  "rows_before": 61319,
+  "rows_affected": 504,
+  "action": "flag"
+ },
+ {
+  "table": "images",
+  "rule": "stale frame: identical to previous frame of same camera (same bytes + same dHash)",
+  "rows_before": 61319,
+  "rows_affected": 580,
+  "action": "flag"
+ },
+ {
+  "table": "images",
+  "rule": "valid images kept for analysis",
+  "rows_before": 61319,
+  "rows_affected": 60235,
+  "action": "keep"
+ },
+ {
+  "table": "detections",
+  "rule": "box confidence < 0.25",
+  "rows_before": 525718,
+  "rows_affected": 259955,
+  "action": "drop"
+ },
+ {
+  "table": "detections",
+  "rule": "vehicle count above p99.9 (22) flagged",
+  "rows_before": 60235,
+  "rows_affected": 52,
+  "action": "flag"
+ },
+ {
+  "table": "rain",
+  "rule": "Buddhist-era date (2569) converted to CE",
+  "rows_before": 5712,
+  "rows_affected": 5712,
+  "action": "convert"
+ },
+ {
+  "table": "rain",
+  "rule": "non-numeric rainfall (\"-\", blank) -> null",
+  "rows_before": 5712,
+  "rows_affected": 0,
+  "action": "set_null"
+ },
+ {
+  "table": "rain",
+  "rule": "rf1h negative or > 200 mm/h -> null",
+  "rows_before": 5712,
+  "rows_affected": 0,
+  "action": "set_null"
+ },
+ {
+  "table": "rain",
+  "rule": "reading timestamp >1h away from requested hour (stale station)",
+  "rows_before": 5712,
+  "rows_affected": 0,
+  "action": "drop"
+ },
+ {
+  "table": "rain",
+  "rule": "duplicate (station, hour)",
+  "rows_before": 5712,
+  "rows_affected": 0,
+  "action": "drop"
+ },
+ {
+  "table": "rain",
+  "rule": "page lists only top-51 stations by 1h rain: unlisted -> 0 when cutoff is 0",
+  "rows_before": 13776,
+  "rows_affected": 7992,
+  "action": "impute"
+ },
+ {
+  "table": "rain",
+  "rule": "unlisted while cutoff > 0 -> censored (null, upper bound kept)",
+  "rows_before": 13776,
+  "rows_affected": 72,
+  "action": "set_null"
+ },
+ {
+  "table": "rain_stations",
+  "rule": "station without valid coordinates or duplicate",
+  "rows_before": 125,
+  "rows_affected": 0,
+  "action": "drop"
+ },
+ {
+  "table": "rain_stations",
+  "rule": "station listed in metadata but never reported rainfall this week",
+  "rows_before": 125,
+  "rows_affected": 2,
+  "action": "drop"
+ },
+ {
+  "table": "metar",
+  "rule": "missing weather code \"M\" -> empty, trace \"T\" -> 0.05 mm",
+  "rows_before": 672,
+  "rows_affected": 577,
+  "action": "convert"
+ },
+ {
+  "table": "metar",
+  "rule": "unparseable time or duplicate report",
+  "rows_before": 672,
+  "rows_affected": 0,
+  "action": "drop"
+ },
+ {
+  "table": "openmeteo",
+  "rule": "missing value or duplicate (cam, hour)",
+  "rows_before": 16800,
+  "rows_affected": 0,
+  "action": "drop"
+ },
+ {
+  "table": "sun",
+  "rule": "UTC timestamps converted to Asia/Bangkok",
+  "rows_before": 7,
+  "rows_affected": 7,
+  "action": "convert"
+ },
+ {
+  "table": "holidays",
+  "rule": "keep public/bank/national holidays only",
+  "rows_before": 37,
+  "rows_affected": 15,
+  "action": "drop"
+ },
+ {
+  "table": "osm_poi",
+  "rule": "no matching category / no coordinates / duplicate",
+  "rows_before": 10952,
+  "rows_affected": 0,
+  "action": "drop"
+ },
+ {
+  "table": "osm_roads",
+  "rule": "road with < 2 vertices or duplicate",
+  "rows_before": 7316,
+  "rows_affected": 0,
+  "action": "drop"
+ },
+ {
+  "table": "flood_readings",
+  "rule": "non-numeric water level -> null",
+  "rows_before": 11760,
+  "rows_affected": 521,
+  "action": "set_null"
+ },
+ {
+  "table": "flood_readings",
+  "rule": "duplicate (sensor, slot)",
+  "rows_before": 11760,
+  "rows_affected": 420,
+  "action": "drop"
+ },
+ {
+  "table": "flood_sensors",
+  "rule": "constant non-zero level all week (likely faulty sensor)",
+  "rows_before": 108,
+  "rows_affected": 0,
+  "action": "flag"
+ },
+ {
+  "table": "flood_sensors",
+  "rule": "sensor without valid coordinates",
+  "rows_before": 239,
+  "rows_affected": 0,
+  "action": "drop"
+ },
+ {
+  "table": "flood_sensors",
+  "rule": "sensor never reported a reading this week",
+  "rows_before": 239,
+  "rows_affected": 144,
+  "action": "flag"
+ },
+ {
+  "table": "flood_risk_points",
+  "rule": "status 1/2/3 -> unfixed, 4 -> partial, 5 -> fixed",
+  "rows_before": 737,
+  "rows_affected": 0,
+  "action": "map"
+ },
+ {
+  "table": "flood_risk_points",
+  "rule": "coordinates outside Bangkok",
+  "rows_before": 737,
+  "rows_affected": 0,
+  "action": "drop"
+ },
+ {
+  "table": "flood_risk_2568",
+  "rule": "columns named UTM_X/UTM_Y actually hold lon/lat degrees; outside bbox dropped",
+  "rows_before": 216,
+  "rows_affected": 0,
+  "action": "drop"
+ },
+ {
+  "table": "road_flood_events_2566",
+  "rule": "cp874 file decoded; \"เขต\" prefix stripped from district",
+  "rows_before": 246,
+  "rows_affected": 246,
+  "action": "convert"
+ }
+]

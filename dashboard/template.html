@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Bangkok CCTV Traffic</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/2.34.0/plotly.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<style>
+:root{--bg:#f6f6f3;--card:#fff;--ink:#1d1d1f;--muted:#6b6b6b;--line:#e3e3df;--wd:#2a6fdb;--we:#e07a1f;--dry:#b8c4d6;--light:#5b8ff0;--heavy:#1c3f94}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#121214;--card:#1c1c1f;--ink:#ececec;--muted:#9a9a9a;--line:#2f2f33;--dry:#5d6675}}
+:root[data-theme=dark]{--bg:#121214;--card:#1c1c1f;--ink:#ececec;--muted:#9a9a9a;--line:#2f2f33;--dry:#5d6675}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.5 -apple-system,'Sarabun','Thonburi',sans-serif}
+header{padding:18px 16px 8px;max-width:1280px;margin:0 auto}h1{margin:0;font-size:22px}header p{margin:2px 0 0;color:var(--muted)}
+.tabs{display:flex;gap:6px;margin-top:12px;flex-wrap:wrap}.tabs button{border:1px solid var(--line);background:var(--card);color:var(--ink);padding:6px 14px;border-radius:16px;cursor:pointer;font:inherit}
+.tabs button.on{background:var(--ink);color:var(--bg)}
+.filters{display:flex;gap:10px;flex-wrap:wrap;padding:10px 16px;max-width:1280px;margin:0 auto;align-items:center}
+.filters label{color:var(--muted);font-size:12.5px;display:flex;flex-direction:column;gap:2px}
+select{font:inherit;padding:5px 8px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink);min-width:130px}
+.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:12px;padding:0 16px 24px;max-width:1280px;margin:0 auto}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;min-width:0}
+.card h3{margin:0 0 2px;font-size:14.5px}.card .q{margin:0 0 6px;color:var(--muted);font-size:12.5px}
+.kpi{grid-column:span 3}.kpi .v{font-size:26px;font-weight:650;font-variant-numeric:tabular-nums}.kpi .l{color:var(--muted);font-size:12.5px}
+.c6{grid-column:span 6}.c12{grid-column:span 12}.c4{grid-column:span 4}.c8{grid-column:span 8}
+.plot{height:300px}#map{height:420px;border-radius:8px}
+table{border-collapse:collapse;width:100%;font-size:13px}th,td{border-bottom:1px solid var(--line);padding:5px 7px;text-align:left}td.n{text-align:right;font-variant-numeric:tabular-nums}
+.hidden{display:none}
+@media (max-width:860px){.kpi{grid-column:span 6}.c6,.c4,.c8{grid-column:span 12}}
+</style>
+</head>
+<body>
+<header>
+  <h1>ฝนตกกับรถติดในกรุงเทพฯ · CCTV 100 กล้อง</h1>
+  <p>25–31 ส.ค. 2569 · นับรถด้วย YOLOv8 · ฝนจากสถานี กทม. · ข้อมูลจาก Gold layer</p>
+  <div class="tabs"><button data-tab="overview" class="on">ภาพรวม</button><button data-tab="rain">ฝน</button><button data-tab="place">พื้นที่ & ประเภทรถ</button><button data-tab="model">โมเดลทำนาย</button></div>
+</header>
+<div class="filters">
+  <label>ประเภทวัน<select id="fDay"><option value="all">ทั้งหมด</option><option value="0">วันธรรมดา</option><option value="1">วันหยุด</option></select></label>
+  <label>ฝน (สถานีใกล้กล้อง)<select id="fRain"><option value="all">ทั้งหมด</option><option value="dry">ไม่ตก</option><option value="light">ฝนเบา</option><option value="heavy">ฝนหนัก</option></select></label>
+  <label>แสง<select id="fLight"><option value="all">ทั้งหมด</option><option value="day">กลางวัน</option><option value="dusk">โพล้เพล้</option><option value="night">กลางคืน</option></select></label>
+  <label>เขต<select id="fDistrict"><option value="all">ทุกเขต</option></select></label>
+  <label>ชนิดถนน (OSM)<select id="fHighway"><option value="all">ทุกชนิด</option></select></label>
+</div>
+
+<section id="tab-overview" class="grid">
+  <div class="card kpi"><div class="v" id="kImages">–</div><div class="l">ภาพที่นับรถ (ตามตัวกรอง)</div></div>
+  <div class="card kpi"><div class="v" id="kVeh">–</div><div class="l">รถเฉลี่ยต่อภาพ</div></div>
+  <div class="card kpi"><div class="v" id="kCams">–</div><div class="l">กล้อง</div></div>
+  <div class="card kpi"><div class="v" id="kRain">–</div><div class="l">สัดส่วนชั่วโมงที่ฝนตก</div></div>
+  <div class="card c8"><h3>รถเฉลี่ยรายชั่วโมง</h3><p class="q">วันธรรมดามียอดเช้าและเย็น วันหยุดยอดเดียวช่วงกลางวัน? (หลัง ~18:30 ฟ้ามืด YOLO นับได้น้อยลง)</p><div id="pHourly" class="plot"></div></div>
+  <div class="card c4"><h3>รถเฉลี่ยรายวัน</h3><p class="q">แต่ละวันในสัปดาห์ต่างกันแค่ไหน</p><div id="pDaily" class="plot"></div></div>
+  <div class="card c12"><h3>แผนที่กล้อง</h3><p class="q">ขนาด/สี = รถเฉลี่ยต่อภาพตามตัวกรอง · คลิกจุดเพื่อดูรายละเอียด</p><div id="map"></div></div>
+</section>
+
+<section id="tab-rain" class="grid hidden">
+  <div class="card c6"><h3>ดัชนีความหนาแน่นตามระดับฝน</h3><p class="q">1.00 = เท่ากับตอนไม่มีฝนของกล้อง×ชั่วโมง×ประเภทวันเดียวกัน (ค่ากลางเรขาคณิต)</p><div id="pRain" class="plot"></div></div>
+  <div class="card c6"><h3>ฝนตกเมื่อไร</h3><p class="q">จำนวนกล้อง-ชั่วโมงที่สถานีใกล้กล้องวัดฝนได้ ≥ 0.5 มม./ชม.</p><div id="pRainWhen" class="plot"></div></div>
+  <div class="card c12"><h3>รายชั่วโมง: ฝนตก vs ไม่ตก</h3><p class="q">เปรียบเทียบดัชนีความหนาแน่นแยกชั่วโมง</p><div id="pRainHour" class="plot"></div></div>
+</section>
+
+<section id="tab-place" class="grid hidden">
+  <div class="card c6"><h3>รถเฉลี่ยตามเขต</h3><p class="q">เขตที่มีกล้อง ≥ 2 ตัว</p><div id="pDistrict" class="plot" style="height:420px"></div></div>
+  <div class="card c6"><h3>สัดส่วนประเภทรถตามชนิดถนน</h3><p class="q">ชนิดถนนจาก OpenStreetMap ในรัศมี 60 ม.</p><div id="pMix" class="plot" style="height:420px"></div></div>
+  <div class="card c12"><h3>วันหยุด ÷ วันธรรมดา รายกล้อง</h3><p class="q">&gt;1 = วันหยุดคึกกว่า</p><div id="pWeekend" class="plot"></div></div>
+</section>
+
+<section id="tab-model" class="grid hidden">
+  <div class="card c6"><h3>เทียบโมเดล (Spark ML)</h3><p class="q">MAE บนชุดทดสอบ 30–31 ส.ค. · เทรนด้วย 25–29 ส.ค. (แบ่งตามเวลา)</p><div id="pModels" class="plot" style="height:420px"></div></div>
+  <div class="card c6"><h3>ค่าจริง vs ค่าทำนาย</h3><p class="q" id="bestTxt"></p><div id="pPred" class="plot" style="height:420px"></div></div>
+  <div class="card c6"><h3>Feature importance</h3><p class="q">Random Forest (F3): ตัวแปรที่ใช้แบ่งข้อมูลมากที่สุด</p><div id="pImp" class="plot" style="height:380px"></div></div>
+  <div class="card c6"><h3>โมเดลบอกว่าฝนลดรถเท่าไร</h3><p class="q">ทำนายชั่วโมงที่ฝนตกในชุดทดสอบ 2 แบบ: ข้อมูลจริง vs สมมติให้ฝน = 0</p><div id="rainCf"></div><h3 style="margin-top:14px">ทำนายกล้องที่ไม่เคยเห็น</h3><p class="q">แบ่ง 5 กลุ่มตามกล้อง: ข้อมูลพื้นที่ (OSM, จุดน้ำท่วม) ช่วยไหม</p><div id="camHold"></div></div>
+</section>
+
+<script>
+const D=/*__DATA__*/null;
+const C=D.cols.reduce((a,c,i)=>(a[c]=i,a),{});
+const camInfo=Object.fromEntries(D.cams.map(c=>[c.cam,c]));
+const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const TH={day:'กลางวัน',dusk:'โพล้เพล้',night:'กลางคืน',dawn:'รุ่งสาง'};
+const fmt=(x,d=2)=>x==null||isNaN(x)?'–':Number(x).toFixed(d);
+function layout(extra){return Object.assign({margin:{l:48,r:12,t:8,b:40},paper_bgcolor:'rgba(0,0,0,0)',plot_bgcolor:'rgba(0,0,0,0)',
+  font:{family:'-apple-system,Sarabun,Thonburi,sans-serif',size:12,color:css('--ink')},xaxis:{gridcolor:css('--line'),zeroline:false},
+  yaxis:{gridcolor:css('--line'),zeroline:false},legend:{orientation:'h',y:-0.2},hoverlabel:{font:{size:12}}},extra||{})}
+const cfg={displayModeBar:false,responsive:true};
+function fill(id,vals,lab){const s=document.getElementById(id);vals.forEach(v=>{const o=document.createElement('option');o.value=v;o.textContent=lab?lab(v):v;s.appendChild(o)})}
+fill('fDistrict',[...new Set(D.cams.map(c=>c.district).filter(Boolean))].sort());
+fill('fHighway',[...new Set(D.cams.map(c=>c.highway))].sort());
+const F={};['fDay','fRain','fLight','fDistrict','fHighway'].forEach(id=>{F[id]=document.getElementById(id);F[id].onchange=render});
+function rows(ignoreRain){return D.rows.filter(r=>{const ci=camInfo[r[C.cam]]||{};
+  return (F.fDay.value==='all'||String(r[C.is_weekend])===F.fDay.value)&&(ignoreRain||F.fRain.value==='all'||r[C.rain_level]===F.fRain.value)&&
+  (F.fLight.value==='all'||r[C.light]===F.fLight.value)&&(F.fDistrict.value==='all'||ci.district===F.fDistrict.value)&&
+  (F.fHighway.value==='all'||ci.highway===F.fHighway.value)})}
+function wmean(rs,col){let s=0,n=0;rs.forEach(r=>{if(r[C[col]]!=null){s+=r[C[col]]*r[C.n_images];n+=r[C.n_images]}});return n?s/n:NaN}
+function gmean(rs,col){let s=0,n=0;rs.forEach(r=>{const v=r[C[col]];if(v>0){s+=Math.log(v)*r[C.n_images];n+=r[C.n_images]}});return n?Math.exp(s/n):NaN}
+function group(rs,key){const m=new Map();rs.forEach(r=>{const k=typeof key==='function'?key(r):r[C[key]];if(!m.has(k))m.set(k,[]);m.get(k).push(r)});return m}
+let map,layer;
+function render(){
+  const rs=rows(false);
+  document.getElementById('kImages').textContent=rs.reduce((a,r)=>a+r[C.n_images],0).toLocaleString();
+  document.getElementById('kVeh').textContent=fmt(wmean(rs,'veh_mean'));
+  document.getElementById('kCams').textContent=new Set(rs.map(r=>r[C.cam])).size;
+  const all=rows(true);document.getElementById('kRain').textContent=all.length?(100*all.filter(r=>r[C.rain_level]==='light'||r[C.rain_level]==='heavy').length/all.length).toFixed(1)+'%':'–';
+  const tr=[];[[0,'วันธรรมดา','--wd'],[1,'วันหยุด','--we']].forEach(([w,n,c])=>{const g=group(rs.filter(r=>r[C.is_weekend]===w),'hour');const hs=[...g.keys()].sort((a,b)=>a-b);
+    if(hs.length)tr.push({x:hs,y:hs.map(h=>wmean(g.get(h),'veh_mean')),name:n,mode:'lines+markers',line:{color:css(c),width:2},marker:{size:6},hovertemplate:'%{x}:00 · %{y:.2f} คัน<extra>'+n+'</extra>'})});
+  Plotly.react('pHourly',tr,layout({xaxis:{title:'ชั่วโมง',dtick:1,gridcolor:css('--line')},yaxis:{title:'คัน/ภาพ',gridcolor:css('--line'),rangemode:'tozero'}}),cfg);
+  const gd=group(rs,'date');const ds=[...gd.keys()].sort();
+  Plotly.react('pDaily',[{x:ds.map(d=>d.slice(5)),y:ds.map(d=>wmean(gd.get(d),'veh_mean')),type:'bar',marker:{color:ds.map(d=>{const w=gd.get(d)[0][C.is_weekend];return css(w?'--we':'--wd')})},hovertemplate:'%{x} · %{y:.2f} คัน<extra></extra>'}],layout({yaxis:{title:'คัน/ภาพ',gridcolor:css('--line')}}),cfg);
+  drawMap(rs);
+  const rr=rows(true);const lv=['dry','light','heavy'],lt={dry:'ไม่ตก',light:'ฝนเบา',heavy:'ฝนหนัก'};
+  const rt=[];[[0,'วันธรรมดา','--wd'],[1,'วันหยุด','--we']].forEach(([w,n,c])=>{const sub=rr.filter(r=>r[C.is_weekend]===w);
+    rt.push({x:lv.map(l=>lt[l]),y:lv.map(l=>gmean(sub.filter(r=>r[C.rain_level]===l),'cong_mean')),name:n,type:'bar',marker:{color:css(c)},
+      text:lv.map(l=>'n='+sub.filter(r=>r[C.rain_level]===l).reduce((a,r)=>a+r[C.n_images],0)),hovertemplate:'%{x}: %{y:.3f} (%{text})<extra>'+n+'</extra>'})});
+  Plotly.react('pRain',rt,layout({barmode:'group',yaxis:{title:'ดัชนี',gridcolor:css('--line'),range:[0,1.3]},shapes:[{type:'line',xref:'paper',x0:0,x1:1,y0:1,y1:1,line:{dash:'dot',color:css('--muted'),width:1}}]}),cfg);
+  const wet=rr.filter(r=>r[C.rain_level]==='light'||r[C.rain_level]==='heavy');const gw=group(wet,r=>r[C.date]);const all2=[...new Set(D.rows.map(r=>r[C.date]))].sort();
+  Plotly.react('pRainWhen',['light','heavy'].map(l=>({x:all2.map(d=>d.slice(5)),y:all2.map(d=>(gw.get(d)||[]).filter(r=>r[C.rain_level]===l).length),name:lt[l],type:'bar',marker:{color:css('--'+l)}})),layout({barmode:'stack',yaxis:{title:'กล้อง-ชั่วโมง',gridcolor:css('--line')}}),cfg);
+  const rh=[];[['dry','--dry'],['light','--light'],['heavy','--heavy']].forEach(([l,c])=>{const g=group(rr.filter(r=>r[C.rain_level]===l),'hour');const hs=[...g.keys()].sort((a,b)=>a-b);
+    rh.push({x:hs,y:hs.map(h=>gmean(g.get(h),'cong_mean')),name:lt[l],mode:'lines+markers',line:{color:css(c),width:2},marker:{size:6}})});
+  Plotly.react('pRainHour',rh,layout({xaxis:{title:'ชั่วโมง',dtick:1,gridcolor:css('--line')},yaxis:{title:'ดัชนี',gridcolor:css('--line')}}),cfg);
+  const day=rs.filter(r=>r[C.light]==='day');const gdist=group(day,r=>(camInfo[r[C.cam]]||{}).district);
+  const dl=[...gdist.entries()].filter(([k,v])=>k&&new Set(v.map(r=>r[C.cam])).size>=2).map(([k,v])=>[k,wmean(v,'veh_mean')]).sort((a,b)=>a[1]-b[1]);
+  Plotly.react('pDistrict',[{y:dl.map(d=>d[0]),x:dl.map(d=>d[1]),type:'bar',orientation:'h',marker:{color:css('--light')},hovertemplate:'%{y}: %{x:.2f} คัน<extra></extra>'}],layout({margin:{l:110,r:12,t:8,b:40},xaxis:{title:'คัน/ภาพ (กลางวัน)',gridcolor:css('--line')}}),cfg);
+  const gh=group(rs,r=>(camInfo[r[C.cam]]||{}).highway);const order=['motorway','trunk','primary','secondary','tertiary','minor'].filter(h=>gh.has(h));
+  const mixc={car_mean:['รถยนต์','--dry'],moto_mean:['มอเตอร์ไซค์','--we'],bus_mean:['รถบัส','#2a9d8f'],truck_mean:['รถบรรทุก','--heavy']};
+  Plotly.react('pMix',Object.entries(mixc).map(([k,[n,c]])=>({y:order,x:order.map(h=>{const g=gh.get(h);const tot=wmean(g,'veh_mean');return 100*wmean(g,k)/tot}),name:n,type:'bar',orientation:'h',marker:{color:c.startsWith('--')?css(c):c,line:{color:css('--card'),width:1.5}},hovertemplate:'%{y}: %{x:.1f}%<extra>'+n+'</extra>'})),
+    layout({barmode:'stack',margin:{l:80,r:12,t:8,b:60},xaxis:{title:'%',range:[0,100],gridcolor:css('--line')}}),cfg);
+  const gc=group(rows(false).filter(r=>F.fDay.value==='all'||true),'cam');const wr=[...gc.entries()].map(([k,v])=>{const a=wmean(v.filter(r=>r[C.is_weekend]===0),'veh_mean'),b=wmean(v.filter(r=>r[C.is_weekend]===1),'veh_mean');return [k,b/a]}).filter(x=>isFinite(x[1])).sort((a,b)=>a[1]-b[1]);
+  Plotly.react('pWeekend',[{x:wr.map(d=>String(d[0])),y:wr.map(d=>d[1]),type:'bar',marker:{color:wr.map(d=>css(d[1]>1?'--we':'--wd'))},customdata:wr.map(d=>(camInfo[d[0]]||{}).name_th),hovertemplate:'กล้อง %{x} · %{customdata}<br>%{y:.2f}<extra></extra>'}],
+    layout({xaxis:{type:'category',showticklabels:false,title:'กล้อง (เรียงจากน้อยไปมาก)'},yaxis:{title:'วันหยุด ÷ วันธรรมดา',gridcolor:css('--line')},shapes:[{type:'line',xref:'paper',x0:0,x1:1,y0:1,y1:1,line:{dash:'dot',color:css('--muted'),width:1}}]}),cfg);
+}
+function drawMap(rs){
+  if(!map){map=L.map('map',{scrollWheelZoom:false}).setView([13.76,100.54],12);
+    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}',{maxZoom:17,attribution:'Tiles © Esri'}).addTo(map)}
+  if(layer)layer.remove();layer=L.layerGroup().addTo(map);
+  const g=group(rs,'cam');const vals=[...g.values()].map(v=>wmean(v,'veh_mean'));const mx=Math.max(...vals,1);
+  g.forEach((v,cam)=>{const c=camInfo[cam];if(!c||!c.lat)return;const m=wmean(v,'veh_mean');const t=m/mx;
+    L.circleMarker([c.lat,c.lon],{radius:4+10*t,color:'#fff',weight:1.5,fillColor:`rgb(${Math.round(184-156*t)},${Math.round(196-133*t)},${Math.round(214-66*t)})`,fillOpacity:.9})
+      .bindPopup(`<b>กล้อง ${cam}</b><br>${c.name_th||''}<br>เขต ${c.district||'–'} · ถนน ${c.highway}<br>รถเฉลี่ย ${fmt(m)} คัน/ภาพ<br>วันหยุด/ธรรมดา ${fmt(c.veh_weekend/c.veh_weekday)}<br>รถบรรทุก ${fmt(100*c.truck_share,1)}% · จุดน้ำท่วมยังไม่แก้ ≤500 ม.: ${c.flood_unfixed_500m}`).addTo(layer)})}
+function renderModel(){
+  const M=D.model;const runs=[...M.runs].sort((a,b)=>b.mae-a.mae);const best=M.best;
+  Plotly.react('pModels',[{y:runs.map(r=>r.model.startsWith('baseline')?r.model:r.model+' · '+r.features),x:runs.map(r=>r.mae),type:'bar',orientation:'h',
+    marker:{color:runs.map(r=>r.model===best.model&&r.features===best.features?css('--heavy'):r.model.startsWith('baseline')?'#999':css('--light'))},
+    customdata:runs.map(r=>[r.rmse,r.r2]),hovertemplate:'MAE %{x:.3f}<br>RMSE %{customdata[0]:.3f} · R² %{customdata[1]:.3f}<extra></extra>'}],layout({margin:{l:190,r:12,t:8,b:40},xaxis:{title:'MAE (คัน/ภาพ)',gridcolor:css('--line')}}),cfg);
+  document.getElementById('bestTxt').textContent=`โมเดลที่ดีที่สุด: ${best.model} · ${best.features} · MAE ${fmt(best.test.mae,3)} · RMSE ${fmt(best.test.rmse,3)} · R² ${fmt(best.test.r2,3)}`;
+  const P=D.pred;const mx=Math.max(...P.map(p=>Math.max(p[0],p[1])));
+  Plotly.react('pPred',[{x:P.map(p=>p[0]),y:P.map(p=>p[1]),mode:'markers',type:'scattergl',marker:{size:5,opacity:.4,color:P.map(p=>css(p[2]?'--we':'--wd'))},hovertemplate:'จริง %{x:.2f} · ทำนาย %{y:.2f}<extra></extra>'},
+    {x:[0,mx],y:[0,mx],mode:'lines',line:{dash:'dot',color:css('--muted'),width:1},hoverinfo:'skip'}],layout({showlegend:false,xaxis:{title:'ค่าจริง',gridcolor:css('--line')},yaxis:{title:'ค่าทำนาย',gridcolor:css('--line')}}),cfg);
+  const imp=Object.entries((best.importance&&Object.keys(best.importance).length?best.importance:M.rf_importance)||{}).slice(0,15).reverse();
+  Plotly.react('pImp',[{y:imp.map(d=>d[0]),x:imp.map(d=>d[1]),type:'bar',orientation:'h',marker:{color:css('--light')}}],layout({margin:{l:170,r:12,t:8,b:40},xaxis:{gridcolor:css('--line')}}),cfg);
+  const cf=M.rain_effect||{};document.getElementById('rainCf').innerHTML='<table><tr><th></th><th>n</th><th>ทำนาย (ฝนจริง)</th><th>ทำนาย (ถ้าไม่ตก)</th><th>อัตราส่วน</th></tr>'+
+    Object.entries(cf).map(([k,v])=>`<tr><td>${k==='weekday'?'วันธรรมดา':'วันหยุด'}</td><td class=n>${v.n}</td><td class=n>${fmt(v.pred_with_rain)}</td><td class=n>${fmt(v.pred_if_dry)}</td><td class=n>${fmt(v.ratio,3)}</td></tr>`).join('')+'</table>';
+  const ch=M.camera_holdout||{};document.getElementById('camHold').innerHTML='<table><tr><th>features</th><th>MAE</th><th>R²</th></tr>'+Object.entries(ch).map(([k,v])=>`<tr><td>${k}</td><td class=n>${fmt(v.mae,3)}</td><td class=n>${fmt(v.r2,3)}</td></tr>`).join('')+'</table>';
+}
+document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tabs button').forEach(x=>x.classList.toggle('on',x===b));
+  document.querySelectorAll('section').forEach(s=>s.classList.toggle('hidden',s.id!=='tab-'+b.dataset.tab));
+  document.querySelector('.filters').style.display=b.dataset.tab==='model'?'none':'flex';
+  if(b.dataset.tab==='overview'&&map)setTimeout(()=>map.invalidateSize(),50);window.dispatchEvent(new Event('resize'))});
+render();renderModel();
+</script>
+</body>
+</html>

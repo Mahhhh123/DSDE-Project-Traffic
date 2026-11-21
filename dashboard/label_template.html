@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Vehicle Count Labeling</title>
+<style>
+:root{--bg:#f6f6f3;--card:#fff;--ink:#1d1d1f;--muted:#6b6b6b;--line:#e3e3df;--accent:#2a6fdb}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#121214;--card:#1c1c1f;--ink:#ececec;--muted:#9a9a9a;--line:#2f2f33;--accent:#6f9cf0}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 -apple-system,'Sarabun','Thonburi',sans-serif}
+main{max-width:980px;margin:0 auto;padding:16px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+img{width:100%;border-radius:8px;border:1px solid var(--line);image-rendering:auto}
+.counters{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:12px 0}
+.c{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px;text-align:center}
+.c .n{font-size:30px;font-weight:650;font-variant-numeric:tabular-nums}.c .k{color:var(--muted);font-size:12px}
+button{font:inherit;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:8px;padding:6px 12px;cursor:pointer}
+.c button{width:44px;font-size:18px}.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.help{color:var(--muted);font-size:13px}
+@media (max-width:640px){.counters{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<main>
+  <div class="top"><h2 id="title" style="margin:0">ภาพ 1/200</h2>
+    <div><button id="prev">← ก่อนหน้า</button> <button id="next" class="primary">ถัดไป →</button> <button id="dl">ดาวน์โหลด CSV</button></div></div>
+  <p class="help">นับรถทุกคันที่เห็นชัดในภาพ (รวมที่จอด) · คีย์ลัด: 1/2/3/4 = +รถยนต์/มอเตอร์ไซค์/บัส/บรรทุก · Shift+เลข = −1 · Enter = ถัดไป · บันทึกในเบราว์เซอร์อัตโนมัติ</p>
+  <img id="img" alt="">
+  <div class="counters" id="counters"></div>
+  <p class="help" id="meta"></p>
+</main>
+<script>
+const ITEMS=/*__ITEMS__*/[];
+const CLS=[['car','รถยนต์/กระบะ/แท็กซี่'],['motorcycle','มอเตอร์ไซค์'],['bus','รถบัส/รถเมล์'],['truck','รถบรรทุก (6 ล้อขึ้นไป)']];
+let L={};try{L=JSON.parse(localStorage.getItem('labels')||'{}')}catch(e){}
+let i=0;try{i=+localStorage.getItem('pos')||0}catch(e){}
+function save(){try{localStorage.setItem('labels',JSON.stringify(L));localStorage.setItem('pos',i)}catch(e){}}
+function cur(){const id=ITEMS[i].image_id;return L[id]||(L[id]={car:0,motorcycle:0,bus:0,truck:0,done:false})}
+function show(){const it=ITEMS[i];document.getElementById('img').src=it.src;
+  document.getElementById('title').textContent=`ภาพ ${i+1}/${ITEMS.length}`;
+  const done=Object.values(L).filter(v=>v.done).length;document.getElementById('meta').textContent=`${it.image_id} · ${it.stratum} · นับแล้ว ${done} ภาพ`;
+  const c=cur();document.getElementById('counters').innerHTML=CLS.map(([k,n],j)=>`<div class=c><div class=k>${j+1} · ${n}</div><div class=n>${c[k]}</div><button data-k="${k}" data-d="-1">−</button> <button data-k="${k}" data-d="1">+</button></div>`).join('');
+  document.querySelectorAll('.c button').forEach(b=>b.onclick=()=>{bump(b.dataset.k,+b.dataset.d)})}
+function bump(k,d){const c=cur();c[k]=Math.max(0,c[k]+d);save();show()}
+function go(d){cur().done=true;i=Math.min(ITEMS.length-1,Math.max(0,i+d));save();show()}
+document.getElementById('next').onclick=()=>go(1);document.getElementById('prev').onclick=()=>go(-1);
+document.addEventListener('keydown',e=>{const n='1234'.indexOf(e.key)>=0?+e.key:{'!':1,'@':2,'#':3,'$':4}[e.key];
+  if(n){bump(CLS[n-1][0],e.shiftKey?-1:1)}else if(e.key==='Enter'||e.key==='ArrowRight')go(1);else if(e.key==='ArrowLeft')go(-1)});
+document.getElementById('dl').onclick=()=>{const rows=['image_id,car,motorcycle,bus,truck'];
+  ITEMS.forEach(it=>{const v=L[it.image_id];if(v&&v.done)rows.push([it.image_id,v.car,v.motorcycle,v.bus,v.truck].join(','))});
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([rows.join('\n')],{type:'text/csv'}));a.download='manual_counts.csv';a.click()};
+show();
+</script>
+</body>
+</html>

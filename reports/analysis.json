@@ -1,0 +1,1114 @@
+{
+ "images_analysed": 60183,
+ "vehicles_counted": 261579,
+ "cameras": 100,
+ "i1": {
+  "hourly_profile": [
+   {
+    "hour": 6,
+    "weekday": 4.11,
+    "weekend": 2.0
+   },
+   {
+    "hour": 7,
+    "weekday": 5.35,
+    "weekend": 2.85
+   },
+   {
+    "hour": 8,
+    "weekday": 5.14,
+    "weekend": 3.74
+   },
+   {
+    "hour": 9,
+    "weekday": 4.93,
+    "weekend": 4.23
+   },
+   {
+    "hour": 10,
+    "weekday": 4.8,
+    "weekend": 4.7
+   },
+   {
+    "hour": 11,
+    "weekday": 5.06,
+    "weekend": 5.12
+   },
+   {
+    "hour": 12,
+    "weekday": 5.16,
+    "weekend": 5.42
+   },
+   {
+    "hour": 13,
+    "weekday": 5.17,
+    "weekend": 4.95
+   },
+   {
+    "hour": 14,
+    "weekday": 5.29,
+    "weekend": 4.97
+   },
+   {
+    "hour": 15,
+    "weekday": 5.55,
+    "weekend": 3.71
+   },
+   {
+    "hour": 16,
+    "weekday": 5.66,
+    "weekend": 4.16
+   },
+   {
+    "hour": 17,
+    "weekday": 5.8,
+    "weekend": 4.05
+   },
+   {
+    "hour": 18,
+    "weekday": 4.23,
+    "weekend": 2.48
+   },
+   {
+    "hour": 19,
+    "weekday": 2.02,
+    "weekend": 1.37
+   },
+   {
+    "hour": 20,
+    "weekday": 1.61,
+    "weekend": 1.48
+   },
+   {
+    "hour": 21,
+    "weekday": 1.72,
+    "weekend": 1.25
+   }
+  ],
+  "weekday_am_peak": {
+   "hour": 7,
+   "veh": 5.35
+  },
+  "weekday_pm_peak": {
+   "hour": 17,
+   "veh": 5.8
+  },
+  "weekend_peak": {
+   "hour": 12,
+   "veh": 5.42
+  },
+  "weekend_vs_weekday_daylight_pct": -20.3,
+  "weekday_profile_corr_range": [
+   -0.19,
+   0.78
+  ],
+  "weekday_profile_corr_matrix": {
+   "2026-08-25": {
+    "2026-08-25": 1.0,
+    "2026-08-26": 0.62,
+    "2026-08-27": 0.46,
+    "2026-08-28": 0.78,
+    "2026-08-31": 0.14
+   },
+   "2026-08-26": {
+    "2026-08-25": 0.62,
+    "2026-08-26": 1.0,
+    "2026-08-27": 0.35,
+    "2026-08-28": 0.53,
+    "2026-08-31": 0.35
+   },
+   "2026-08-27": {
+    "2026-08-25": 0.46,
+    "2026-08-26": 0.35,
+    "2026-08-27": 1.0,
+    "2026-08-28": 0.7,
+    "2026-08-31": -0.19
+   },
+   "2026-08-28": {
+    "2026-08-25": 0.78,
+    "2026-08-26": 0.53,
+    "2026-08-27": 0.7,
+    "2026-08-28": 1.0,
+    "2026-08-31": 0.36
+   },
+   "2026-08-31": {
+    "2026-08-25": 0.14,
+    "2026-08-26": 0.35,
+    "2026-08-27": -0.19,
+    "2026-08-28": 0.36,
+    "2026-08-31": 1.0
+   }
+  },
+  "daylight_hourly_by_date": [
+   {
+    "hour": 6,
+    "2026-08-25": 4.33,
+    "2026-08-26": 4.66,
+    "2026-08-27": NaN,
+    "2026-08-28": 4.28,
+    "2026-08-29": 2.31,
+    "2026-08-30": 1.87,
+    "2026-08-31": 4.2
+   },
+   {
+    "hour": 7,
+    "2026-08-25": 5.05,
+    "2026-08-26": 5.94,
+    "2026-08-27": 4.5,
+    "2026-08-28": 5.16,
+    "2026-08-29": 3.08,
+    "2026-08-30": 2.65,
+    "2026-08-31": 5.34
+   },
+   {
+    "hour": 8,
+    "2026-08-25": 4.87,
+    "2026-08-26": 5.75,
+    "2026-08-27": 5.16,
+    "2026-08-28": 4.76,
+    "2026-08-29": 4.0,
+    "2026-08-30": 3.44,
+    "2026-08-31": 5.18
+   },
+   {
+    "hour": 9,
+    "2026-08-25": 4.46,
+    "2026-08-26": 5.24,
+    "2026-08-27": 4.96,
+    "2026-08-28": 4.77,
+    "2026-08-29": 4.52,
+    "2026-08-30": 3.94,
+    "2026-08-31": 5.23
+   },
+   {
+    "hour": 10,
+    "2026-08-25": 4.68,
+    "2026-08-26": 4.74,
+    "2026-08-27": 4.79,
+    "2026-08-28": 5.06,
+    "2026-08-29": 5.08,
+    "2026-08-30": 4.32,
+    "2026-08-31": 4.72
+   },
+   {
+    "hour": 11,
+    "2026-08-25": 4.95,
+    "2026-08-26": 5.35,
+    "2026-08-27": 5.04,
+    "2026-08-28": 5.06,
+    "2026-08-29": 5.49,
+    "2026-08-30": 4.76,
+    "2026-08-31": 4.92
+   },
+   {
+    "hour": 12,
+    "2026-08-25": 5.1,
+    "2026-08-26": 5.16,
+    "2026-08-27": 5.1,
+    "2026-08-28": 5.3,
+    "2026-08-29": 5.51,
+    "2026-08-30": 5.32,
+    "2026-08-31": 5.12
+   },
+   {
+    "hour": 13,
+    "2026-08-25": 5.18,
+    "2026-08-26": 5.25,
+    "2026-08-27": 4.93,
+    "2026-08-28": 5.21,
+    "2026-08-29": 4.84,
+    "2026-08-30": 5.05,
+    "2026-08-31": 5.26
+   },
+   {
+    "hour": 14,
+    "2026-08-25": 5.51,
+    "2026-08-26": 5.29,
+    "2026-08-27": 5.21,
+    "2026-08-28": 5.51,
+    "2026-08-29": 4.87,
+    "2026-08-30": 5.07,
+    "2026-08-31": 4.95
+   },
+   {
+    "hour": 15,
+    "2026-08-25": 5.59,
+    "2026-08-26": 5.7,
+    "2026-08-27": 5.29,
+    "2026-08-28": 5.96,
+    "2026-08-29": 3.52,
+    "2026-08-30": 3.9,
+    "2026-08-31": 5.2
+   },
+   {
+    "hour": 16,
+    "2026-08-25": 5.73,
+    "2026-08-26": 5.62,
+    "2026-08-27": 5.26,
+    "2026-08-28": 6.46,
+    "2026-08-29": 4.37,
+    "2026-08-30": 3.96,
+    "2026-08-31": 5.22
+   },
+   {
+    "hour": 17,
+    "2026-08-25": 5.28,
+    "2026-08-26": 5.81,
+    "2026-08-27": 6.1,
+    "2026-08-28": 6.66,
+    "2026-08-29": 4.14,
+    "2026-08-30": 3.96,
+    "2026-08-31": 5.16
+   },
+   {
+    "hour": 18,
+    "2026-08-25": 5.58,
+    "2026-08-26": 5.78,
+    "2026-08-27": 5.42,
+    "2026-08-28": 5.31,
+    "2026-08-29": 3.47,
+    "2026-08-30": 2.92,
+    "2026-08-31": 3.98
+   }
+  ],
+  "holidays_in_period": 0
+ },
+ "i2": {
+  "cams_evening_heavier": 50,
+  "cams_morning_heavier": 23,
+  "cams_similar": 27,
+  "median_ratio_near_rail_500m": 0.884,
+  "n_near_rail": 39,
+  "median_ratio_elsewhere": 0.909,
+  "mannwhitney_p_near_vs_else": 0.9718,
+  "spearman_dist_rail_vs_ratio": {
+   "rho": 0.017,
+   "p": 0.8691
+  },
+  "ratio_by_highway": {
+   "motorway": 0.945,
+   "primary": 0.916,
+   "secondary": 0.808,
+   "tertiary": 0.569,
+   "trunk": 0.674
+  },
+  "peak_hour_distribution": {
+   "6": 3,
+   "7": 12,
+   "8": 7,
+   "9": 3,
+   "10": 4,
+   "11": 4,
+   "12": 4,
+   "13": 3,
+   "14": 9,
+   "15": 11,
+   "16": 12,
+   "17": 18,
+   "18": 10
+  }
+ },
+ "i3": {
+  "all_light": {
+   "dry": {
+    "estimate": 0.973,
+    "ci95": [
+     0.962,
+     0.986
+    ],
+    "n_images": 40459,
+    "n_cams": 100
+   },
+   "light": {
+    "estimate": 0.781,
+    "ci95": [
+     0.742,
+     0.824
+    ],
+    "n_images": 1675,
+    "n_cams": 95
+   },
+   "heavy": {
+    "estimate": 0.696,
+    "ci95": [
+     0.649,
+     0.748
+    ],
+    "n_images": 82,
+    "n_cams": 9
+   }
+  },
+  "daylight_only": {
+   "dry": {
+    "estimate": 0.974,
+    "ci95": [
+     0.963,
+     0.986
+    ],
+    "n_images": 33835,
+    "n_cams": 100
+   },
+   "light": {
+    "estimate": 0.864,
+    "ci95": [
+     0.811,
+     0.921
+    ],
+    "n_images": 787,
+    "n_cams": 91
+   },
+   "heavy": {
+    "estimate": 0.696,
+    "ci95": [
+     0.649,
+     0.754
+    ],
+    "n_images": 82,
+    "n_cams": 9
+   }
+  },
+  "dusk_night": {
+   "dry": {
+    "estimate": 0.97,
+    "ci95": [
+     0.945,
+     0.995
+    ],
+    "n_images": 6624,
+    "n_cams": 100
+   },
+   "light": {
+    "estimate": 0.715,
+    "ci95": [
+     0.658,
+     0.777
+    ],
+    "n_images": 888,
+    "n_cams": 87
+   }
+  },
+  "mixed_model": {
+   "C(rain_level, Treatment('dry'))[T.heavy]": {
+    "coef": -0.2347,
+    "pct_change": -20.9,
+    "p": 0.0003
+   },
+   "C(rain_level, Treatment('dry'))[T.light]": {
+    "coef": -0.1753,
+    "pct_change": -16.1,
+    "p": 0.0
+   },
+   "C(rain_level, Treatment('dry'))[T.heavy]:C(day)[T.weekend]": {
+    "coef": 0.1161,
+    "pct_change": 12.3,
+    "p": 0.0965
+   },
+   "C(rain_level, Treatment('dry'))[T.light]:C(day)[T.weekend]": {
+    "coef": 0.2081,
+    "pct_change": 23.1,
+    "p": 0.0
+   }
+  },
+  "metar_agreement": {
+   "hours_metar_rain": 36,
+   "of_which_city_share_gt_10pct": 17,
+   "hours_city_share_gt_10pct": 20
+  },
+  "openmeteo_vs_station": {
+   "images_rain_station": 4599,
+   "images_rain_openmeteo": 20116,
+   "agreement_pct": 68.0,
+   "weekday_effect_if_openmeteo_used": {
+    "light": {
+     "estimate": 0.939,
+     "ci95": [
+      0.926,
+      0.953
+     ],
+     "n_images": 12716,
+     "n_cams": 100
+    },
+    "heavy": {
+     "estimate": 1.028,
+     "ci95": [
+      0.91,
+      1.2
+     ],
+     "n_images": 114,
+     "n_cams": 19
+    }
+   }
+  },
+  "rain_by_date_hour": [
+   {
+    "date": "2026-08-25",
+    "hour": 15,
+    "images": 6
+   },
+   {
+    "date": "2026-08-25",
+    "hour": 16,
+    "images": 60
+   },
+   {
+    "date": "2026-08-28",
+    "hour": 18,
+    "images": 24
+   },
+   {
+    "date": "2026-08-28",
+    "hour": 19,
+    "images": 18
+   },
+   {
+    "date": "2026-08-28",
+    "hour": 20,
+    "images": 144
+   },
+   {
+    "date": "2026-08-29",
+    "hour": 6,
+    "images": 12
+   },
+   {
+    "date": "2026-08-29",
+    "hour": 9,
+    "images": 6
+   },
+   {
+    "date": "2026-08-29",
+    "hour": 10,
+    "images": 12
+   },
+   {
+    "date": "2026-08-29",
+    "hour": 12,
+    "images": 36
+   },
+   {
+    "date": "2026-08-29",
+    "hour": 13,
+    "images": 359
+   },
+   {
+    "date": "2026-08-29",
+    "hour": 14,
+    "images": 300
+   },
+   {
+    "date": "2026-08-29",
+    "hour": 15,
+    "images": 588
+   },
+   {
+    "date": "2026-08-29",
+    "hour": 16,
+    "images": 230
+   },
+   {
+    "date": "2026-08-29",
+    "hour": 17,
+    "images": 307
+   },
+   {
+    "date": "2026-08-29",
+    "hour": 18,
+    "images": 18
+   },
+   {
+    "date": "2026-08-29",
+    "hour": 19,
+    "images": 12
+   },
+   {
+    "date": "2026-08-29",
+    "hour": 20,
+    "images": 24
+   },
+   {
+    "date": "2026-08-30",
+    "hour": 6,
+    "images": 18
+   },
+   {
+    "date": "2026-08-30",
+    "hour": 9,
+    "images": 12
+   },
+   {
+    "date": "2026-08-30",
+    "hour": 10,
+    "images": 22
+   },
+   {
+    "date": "2026-08-30",
+    "hour": 14,
+    "images": 83
+   },
+   {
+    "date": "2026-08-30",
+    "hour": 15,
+    "images": 269
+   },
+   {
+    "date": "2026-08-30",
+    "hour": 16,
+    "images": 223
+   },
+   {
+    "date": "2026-08-30",
+    "hour": 17,
+    "images": 191
+   },
+   {
+    "date": "2026-08-30",
+    "hour": 18,
+    "images": 48
+   },
+   {
+    "date": "2026-08-30",
+    "hour": 19,
+    "images": 12
+   },
+   {
+    "date": "2026-08-30",
+    "hour": 20,
+    "images": 60
+   },
+   {
+    "date": "2026-08-31",
+    "hour": 9,
+    "images": 6
+   },
+   {
+    "date": "2026-08-31",
+    "hour": 10,
+    "images": 24
+   },
+   {
+    "date": "2026-08-31",
+    "hour": 12,
+    "images": 6
+   },
+   {
+    "date": "2026-08-31",
+    "hour": 14,
+    "images": 107
+   },
+   {
+    "date": "2026-08-31",
+    "hour": 15,
+    "images": 24
+   },
+   {
+    "date": "2026-08-31",
+    "hour": 16,
+    "images": 118
+   },
+   {
+    "date": "2026-08-31",
+    "hour": 17,
+    "images": 358
+   },
+   {
+    "date": "2026-08-31",
+    "hour": 18,
+    "images": 286
+   },
+   {
+    "date": "2026-08-31",
+    "hour": 19,
+    "images": 252
+   },
+   {
+    "date": "2026-08-31",
+    "hour": 20,
+    "images": 324
+   }
+  ]
+ },
+ "i4": {
+  "weekend": {
+   "dry": {
+    "estimate": 1.045,
+    "ci95": [
+     1.029,
+     1.064
+    ],
+    "n_images": 14774,
+    "n_cams": 100
+   },
+   "light": {
+    "estimate": 1.092,
+    "ci95": [
+     1.015,
+     1.173
+    ],
+    "n_images": 907,
+    "n_cams": 78
+   },
+   "heavy": {
+    "estimate": 0.963,
+    "ci95": [
+     0.885,
+     1.048
+    ],
+    "n_images": 663,
+    "n_cams": 80
+   }
+  },
+  "flood_sensors": {
+   "images_with_sensor_within_1km": 44948,
+   "cams_with_sensor": 75,
+   "readings_above_0cm": 0,
+   "max_cm": 0.0
+  },
+  "unfixed_flood_points": {
+   "cams_with_unfixed_500m": 21,
+   "median_rain_ratio_with": 0.943,
+   "median_rain_ratio_without": 0.857,
+   "mannwhitney_p": 0.2013
+  },
+  "dbscan_hotspot": {
+   "cams_in_hotspot_with_rain": 2,
+   "median_with": 0.727,
+   "median_without": 0.885,
+   "mannwhitney_p": null
+  },
+  "kde_vs_rain_ratio": {
+   "rho": 0.042,
+   "p": 0.6814
+  }
+ },
+ "i5": {
+  "top_weekend": [
+   {
+    "cam": 169,
+    "name_th": "สะพานลอยหน้าวัดเสาหิน-ใกล้ซ",
+    "name_en": "Footbridge in front of Wat Sao  Hin  Near Soi Wong Sawang 3 on Wong Sawang Road",
+    "district": "บางซื่อ",
+    "veh_weekday": 3.991,
+    "veh_weekend": 4.596,
+    "weekend_ratio": 1.152,
+    "poi_market": 0.0,
+    "poi_mall": 0.0,
+    "poi_office": 1.0
+   },
+   {
+    "cam": 176,
+    "name_th": "สะพานลอยหน้าสวนจตุจักร-ถนนพ",
+    "name_en": "Footbridge in front of Chatuchak Park on Phahon Yothin Road",
+    "district": "บางซื่อ",
+    "veh_weekday": 2.021,
+    "veh_weekend": 2.318,
+    "weekend_ratio": 1.147,
+    "poi_market": 0.0,
+    "poi_mall": 1.0,
+    "poi_office": 0.0
+   },
+   {
+    "cam": 70,
+    "name_th": "หน้าธนาคารแห่งประเทศไทย-ถนน",
+    "name_en": "Near Thanachart Bank Public Company Limited,Branch Bang Khunphrom on Sam Sen Road",
+    "district": "พระนคร",
+    "veh_weekday": 2.909,
+    "veh_weekend": 2.994,
+    "weekend_ratio": 1.029,
+    "poi_market": 5.0,
+    "poi_mall": 0.0,
+    "poi_office": 2.0
+   },
+   {
+    "cam": 301,
+    "name_th": "แยกอู่ทองนอก",
+    "name_en": "Aoo Tong Nok Intersection",
+    "district": "พระนคร",
+    "veh_weekday": 4.079,
+    "veh_weekend": 4.144,
+    "weekend_ratio": 1.016,
+    "poi_market": 0.0,
+    "poi_mall": 0.0,
+    "poi_office": 1.0
+   },
+   {
+    "cam": 239,
+    "name_th": "สะพานลอยใกล้-รร.เตรียมอุดมศึ",
+    "name_en": "Footbridge near Triamudomsuksa School on Phayathai Road",
+    "district": "ปทุมวัน",
+    "veh_weekday": 1.592,
+    "veh_weekend": 1.615,
+    "weekend_ratio": 1.014,
+    "poi_market": 0.0,
+    "poi_mall": 0.0,
+    "poi_office": 2.0
+   }
+  ],
+  "bottom_weekend": [
+   {
+    "cam": 196,
+    "name_th": "สะพานลอยหน้าแมคโคร-ถนนนราธิ",
+    "name_en": "Footbridge in front of Makro on Narathiwas Road",
+    "district": "สาทร",
+    "veh_weekday": 2.509,
+    "veh_weekend": 0.793,
+    "weekend_ratio": 0.316,
+    "poi_market": 0.0,
+    "poi_mall": 0.0,
+    "poi_office": 2.0
+   },
+   {
+    "cam": 206,
+    "name_th": "สะพานลอยใกล้ซอยนราธิวาสราช",
+    "name_en": "Footbridge near Soi Narathiwas 20 on Narathiwas Road",
+    "district": "ยานนาวา",
+    "veh_weekday": 1.407,
+    "veh_weekend": 0.464,
+    "weekend_ratio": 0.33,
+    "poi_market": 0.0,
+    "poi_mall": 0.0,
+    "poi_office": 1.0
+   },
+   {
+    "cam": 141,
+    "name_th": "สะพานลอยหน้าบริษัท-ปตท.-จำกั",
+    "name_en": "Footbridge in front of PTT Public Company Limited near Soi Vibhavadi Rangsit 11 on Vibhavadi Rangsit Road",
+    "district": "จตุจักร",
+    "veh_weekday": 2.8,
+    "veh_weekend": 1.151,
+    "weekend_ratio": 0.411,
+    "poi_market": 0.0,
+    "poi_mall": 0.0,
+    "poi_office": 4.0
+   },
+   {
+    "cam": 233,
+    "name_th": "ตรงข้ามพระตำหนักจิตรลดารโห",
+    "name_en": "Opposite Chitralada Palace on Rama 5 Road",
+    "district": "ดุสิต",
+    "veh_weekday": 1.963,
+    "veh_weekend": 0.848,
+    "weekend_ratio": 0.432,
+    "poi_market": 0.0,
+    "poi_mall": 0.0,
+    "poi_office": 0.0
+   },
+   {
+    "cam": 939,
+    "name_th": "TF-KP-04-แยกมหาดไทย",
+    "name_en": NaN,
+    "district": "วังทองหลาง",
+    "veh_weekday": 1.369,
+    "veh_weekend": 0.659,
+    "weekend_ratio": 0.481,
+    "poi_market": 0.0,
+    "poi_mall": 0.0,
+    "poi_office": 1.0
+   }
+  ],
+  "median_ratio": 0.788,
+  "poi_spearman": {
+   "poi_mall": {
+    "rho": 0.126,
+    "p": 0.217
+   },
+   "poi_market": {
+    "rho": 0.032,
+    "p": 0.752
+   },
+   "poi_government": {
+    "rho": -0.091,
+    "p": 0.371
+   },
+   "poi_office": {
+    "rho": -0.023,
+    "p": 0.822
+   },
+   "poi_school": {
+    "rho": 0.062,
+    "p": 0.545
+   },
+   "poi_rail_station": {
+    "rho": 0.254,
+    "p": 0.011
+   },
+   "poi_bus_stop": {
+    "rho": 0.024,
+    "p": 0.811
+   },
+   "poi_food": {
+    "rho": 0.187,
+    "p": 0.065
+   },
+   "poi_hospital": {
+    "rho": 0.097,
+    "p": 0.342
+   }
+  }
+ },
+ "i6": {
+  "district_daylight": [
+   {
+    "district": "บางกอกใหญ่",
+    "veh": 7.82,
+    "cams": 2
+   },
+   {
+    "district": "ราชเทวี",
+    "veh": 7.34,
+    "cams": 5
+   },
+   {
+    "district": "ธนบุรี",
+    "veh": 7.09,
+    "cams": 6
+   },
+   {
+    "district": "ป้อมปราบฯ",
+    "veh": 6.24,
+    "cams": 6
+   },
+   {
+    "district": "ยานนาวา",
+    "veh": 5.91,
+    "cams": 4
+   },
+   {
+    "district": "บางรัก",
+    "veh": 5.68,
+    "cams": 5
+   },
+   {
+    "district": "คลองสาน",
+    "veh": 5.49,
+    "cams": 3
+   },
+   {
+    "district": "พญาไท",
+    "veh": 5.11,
+    "cams": 5
+   },
+   {
+    "district": "ห้วยขวาง",
+    "veh": 5.08,
+    "cams": 9
+   },
+   {
+    "district": "ปทุมวัน",
+    "veh": 4.57,
+    "cams": 5
+   },
+   {
+    "district": "จตุจักร",
+    "veh": 4.38,
+    "cams": 13
+   },
+   {
+    "district": "ตลิ่งชัน",
+    "veh": 4.22,
+    "cams": 3
+   },
+   {
+    "district": "บางซื่อ",
+    "veh": 4.12,
+    "cams": 6
+   },
+   {
+    "district": "สาทร",
+    "veh": 3.62,
+    "cams": 3
+   },
+   {
+    "district": "ดุสิต",
+    "veh": 3.55,
+    "cams": 8
+   },
+   {
+    "district": "พระนคร",
+    "veh": 3.54,
+    "cams": 11
+   },
+   {
+    "district": "สัมพันธวงศ์",
+    "veh": 2.83,
+    "cams": 2
+   }
+  ],
+  "highway_veh_median": [
+   {
+    "highway": "motorway",
+    "median": 5.72,
+    "count": 6
+   },
+   {
+    "highway": "primary",
+    "median": 4.17,
+    "count": 55
+   },
+   {
+    "highway": "secondary",
+    "median": 3.75,
+    "count": 32
+   },
+   {
+    "highway": "tertiary",
+    "median": 2.46,
+    "count": 5
+   },
+   {
+    "highway": "trunk",
+    "median": 3.27,
+    "count": 2
+   }
+  ],
+  "kruskal_highway_p": 0.5598,
+  "weekday_evening_16_18_by_day": {
+   "Fri": 6.28,
+   "Mon": 4.95,
+   "Thu": 5.62,
+   "Tue": 5.52,
+   "Wed": 5.73
+  }
+ },
+ "i7": {
+  "share_by_highway_pct": [
+   {
+    "highway": "motorway",
+    "car": 78.1,
+    "motorcycle": 2.5,
+    "bus": 6.6,
+    "truck": 12.8
+   },
+   {
+    "highway": "primary",
+    "car": 74.9,
+    "motorcycle": 3.2,
+    "bus": 13.4,
+    "truck": 8.5
+   },
+   {
+    "highway": "secondary",
+    "car": 76.7,
+    "motorcycle": 7.4,
+    "bus": 7.9,
+    "truck": 8.1
+   },
+   {
+    "highway": "tertiary",
+    "car": 86.0,
+    "motorcycle": 2.3,
+    "bus": 6.0,
+    "truck": 5.7
+   },
+   {
+    "highway": "trunk",
+    "car": 83.1,
+    "motorcycle": 0.2,
+    "bus": 5.1,
+    "truck": 11.7
+   }
+  ],
+  "overall_share_pct": {
+   "car": 76.3,
+   "motorcycle": 4.3,
+   "bus": 10.8,
+   "truck": 8.6
+  },
+  "moto_vs_food_spearman": {
+   "rho": 0.214,
+   "p": 0.0323
+  },
+  "top_moto_cams": [
+   {
+    "cam": 603,
+    "name_th": "BR-05-01-แยกสีลม-นราธิวาส",
+    "district": "บางรัก",
+    "moto_share": 0.349,
+    "poi_food": 72.0,
+    "poi_office": 26.0
+   },
+   {
+    "cam": 500,
+    "name_th": "ทางแยกมิตรสัมพันธ์",
+    "district": "ปทุมวัน",
+    "moto_share": 0.26,
+    "poi_food": 37.0,
+    "poi_office": 0.0
+   },
+   {
+    "cam": 371,
+    "name_th": "แยกเทเวศน์",
+    "district": "พระนคร",
+    "moto_share": 0.23,
+    "poi_food": 41.0,
+    "poi_office": 9.0
+   }
+  ],
+  "truck_share_by_hour_daylight": [
+   {
+    "hour": 6,
+    "weekday": 7.7,
+    "weekend": 11.4
+   },
+   {
+    "hour": 7,
+    "weekday": 7.7,
+    "weekend": 10.6
+   },
+   {
+    "hour": 8,
+    "weekday": 8.4,
+    "weekend": 10.1
+   },
+   {
+    "hour": 9,
+    "weekday": 10.5,
+    "weekend": 10.1
+   },
+   {
+    "hour": 10,
+    "weekday": 10.4,
+    "weekend": 9.6
+   },
+   {
+    "hour": 11,
+    "weekday": 10.2,
+    "weekend": 9.9
+   },
+   {
+    "hour": 12,
+    "weekday": 9.7,
+    "weekend": 8.6
+   },
+   {
+    "hour": 13,
+    "weekday": 10.3,
+    "weekend": 8.7
+   },
+   {
+    "hour": 14,
+    "weekday": 10.3,
+    "weekend": 8.7
+   },
+   {
+    "hour": 15,
+    "weekday": 9.3,
+    "weekend": 8.7
+   },
+   {
+    "hour": 16,
+    "weekday": 8.2,
+    "weekend": 8.1
+   },
+   {
+    "hour": 17,
+    "weekday": 7.5,
+    "weekend": 8.0
+   },
+   {
+    "hour": 18,
+    "weekday": 5.9,
+    "weekend": 5.3
+   }
+  ]
+ }
+}

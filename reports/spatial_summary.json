@@ -1,0 +1,18 @@
+{
+ "crs": "EPSG:32647",
+ "cameras": 100,
+ "station_dist_m_median": 847.3,
+ "highway_counts": {
+  "primary": 55,
+  "secondary": 32,
+  "motorway": 6,
+  "tertiary": 5,
+  "trunk": 2
+ },
+ "dbscan": {
+  "points": 737,
+  "clusters": 26,
+  "noise": 564,
+  "cameras_in_hotspot": 2
+ }
+}

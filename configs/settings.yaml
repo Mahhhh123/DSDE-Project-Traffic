@@ -1,0 +1,59 @@
+project: bangkok-cctv-rain-traffic
+
+paths:
+  images_zip: ~/Downloads/cctv_images.zip
+  cctv_info: data/given/cctv_info.csv
+  landing: lake/landing
+  bronze: lake/bronze
+  silver: lake/silver
+  gold: lake/gold
+  reports: reports
+  models: models
+  dashboard: dashboard
+
+period:
+  start: 2026-08-25
+  end: 2026-08-31
+  first_hour: 6
+  last_hour: 21
+
+scrape:
+  user_agent: "DSDE-CEDT-student-project/1.0 (educational, low rate)"
+  delay_seconds: 1.5
+  retries: 3
+  timeout_seconds: 90
+
+cleaning:
+  broken_image_bytes: 3000
+  yolo_conf: 0.25
+  rain_max_mm_per_hour: 200
+  bangkok_bbox: [13.45, 100.30, 14.05, 100.95]
+
+rain:
+  dry_below_mm: 0.5
+  heavy_from_mm: 5.0
+
+spatial:
+  crs_metric: EPSG:32647
+  poi_radius_m: 300
+  road_radius_m: 60
+  flood_radius_m: 500
+  flood_sensor_radius_m: 1000
+  dbscan_eps_m: 400
+  dbscan_min_samples: 4
+  kde_bandwidth_m: 600
+
+model:
+  min_images_per_hour: 3
+  train_end: 2026-08-29
+  test_start: 2026-08-30
+  tuning_folds:
+    - {train_end: 2026-08-27, valid: 2026-08-28}
+    - {train_end: 2026-08-28, valid: 2026-08-29}
+  camera_folds: 5
+  seed: 42
+
+kafka:
+  bootstrap: localhost:9092
+  topic: cctv-frames
+  partitions: 3
