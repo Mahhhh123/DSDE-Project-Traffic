@@ -16,6 +16,7 @@ STEPS = [
     ('S2 METAR สนามบิน', 'metar_30min.csv', ['01_scraping/s2_metar_airports.py']),
     ('S3 Open-Meteo', 'openmeteo_hourly.csv', ['01_scraping/s3_openmeteo.py']),
     ('S4 พระอาทิตย์ขึ้น/ตก', 'sun_daily.csv', ['01_scraping/s4_sun.py']),
+    ('S6 OpenStreetMap ถนนและสถานที่', 'osm_camera_context.csv', ['01_scraping/s6_osm_roads.py']),
     ('S8 น้ำท่วมถนน กทม.', 'bma_road_flood_hourly.csv', ['01_scraping/s8_bma_road_flood.py']),
     ('S9 จุดเสี่ยงน้ำท่วม กทม.', 'flood_risk_points.csv', ['01_scraping/s9_bma_flood_risk.py']),
     ('P1 ดัชนีภาพ', 'images.csv', ['02_data_engineering/p1_index_images.py', '<zip>']),
